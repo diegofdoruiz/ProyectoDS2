@@ -64,7 +64,21 @@
 				<label for="rol">Rol</label>
 				<select name="rol" class="form-control">
 					@foreach ($roles as $rol)
-						<option value="{{$rol->codigo}}">{{$rol->rol}}</option>
+						<option value="{{$rol->codigo}}" {{ $rol->codigo == old('rol') ? 'selected' : '' }}>
+							{{$rol->rol}}
+						</option>
+					@endforeach
+				</select>
+			</div>
+		</div>
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<div class="form-group">
+				<label for="escuela">Escuela</label>
+				<select name="escuela" class="form-control">
+					@foreach ($escuelas as $escuela)
+						<option value="{{$escuela->codigo}}" {{ $escuela->codigo == old('escuela') ? 'selected' : '' }}>
+							{{$escuela->nombre}}
+						</option>
 					@endforeach
 				</select>
 			</div>

@@ -14,9 +14,9 @@
 			@endif
 		</div>
 	</div>
-	{!! Form::open(array('url'=>'curso', 'method'=>'POST', 'onsubmit' => 'return validar()')) !!}
+	{!! Form::open(array('url'=>'curso', 'method'=>'POST')) !!}
 	{{ Form::token() }}
-	<div class="row">
+	<div id="formulario" class="row">
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label for="codigo">Código</label>
@@ -110,7 +110,14 @@
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<button class="btn btn-primary" type="submit">Guardar</button>
+				<label for="programa">Pre-Requisitos</label>
+				<textarea name="prerequisitos" class="form-control" rows="3" style="margin-bottom:5px">añadir prerequisitos</textarea>
+				<button id="btn_pre" class="btn btn-info btn-sm btn-xs" onclick="prerequisitos()">Añadir Prerequisitos</button>
+			</div>
+		</div>
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<div class="form-group">
+				<button id="guardar" class="btn btn-primary" type="submit">Guardar</button>
 				<button class="btn btn-danger" type="reset">cancelar</button>
 			</div>
 		</div>

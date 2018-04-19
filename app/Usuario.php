@@ -27,6 +27,7 @@ class Usuario extends Authenticatable
         'password', 
         'remember_token',
         'estado',
+        'codigo_escuela',
     ];
     protected $guarded = [];
 

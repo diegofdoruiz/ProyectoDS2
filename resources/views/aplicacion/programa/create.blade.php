@@ -31,7 +31,7 @@
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<label for="semestre">Semestre</label>
+				<label for="semestre">Semestres</label>
 				<input type="text" name="semestres" class="form-control" value="{{old('semestres')}}" placeholder="Ej 10...">
 			</div>
 		</div>
@@ -44,22 +44,18 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label for="escuela">Escuela</label>
-				<select name="escuela" class="form-control">
-					<option value="">Seleccione</option>
-					@foreach ($escuelas as $escuela)
-						<option value="{{$escuela->codigo}}">{{$escuela->nombre}}</option>
-					@endforeach
+				<select name="escuela" class="form-control" readonly>
+					<option value="{{$escuela->codigo}}">
+						{{$escuela->nombre}}
+					</option>
 				</select>
 			</div>
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<label for="director">Director de plan</label>
-				<select name="director" class="form-control">
-					<option value="">Seleccione</option>
-					@foreach ($directores as $director)
-						<option value="{{$director->codigo}}">{{$director->primer_nombre}} {{$director->primer_apellido}}</option>
-					@endforeach
+				<label for="director">Creador del programa</label>
+				<select name="director" class="form-control" readonly>
+					<option value="{{$usuario->codigo}}">{{$usuario->primer_nombre}} {{$usuario->primer_apellido}}</option>
 				</select>
 			</div>
 		</div>

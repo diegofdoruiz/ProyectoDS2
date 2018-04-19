@@ -23,16 +23,31 @@ class ProgramaFormRequest extends FormRequest
      */
     public function rules()
     {
-        $rules  =   [
+        switch ($this->method()) {
+            case 'POST':
+                return [
+                     'codigo'=> 'required|min:2|max:15|unique:programa',
                      'nombre' => 'required|min:3|max:50',
                      'semestres' => 'required',
                      'creditos' => 'required',
                      'escuela' => 'required|min:3|max:30',
-                     'director' => 'required|min:3|max:15',
-                    ];
-        if (!$this->has('post_id')){
-            $rules += ['codigo'=> 'required|min:2|max:15|unique:programa'];
+                     'director' => 'required|min:3|max:15|unique:programa',
+                ];
+                break;
+            case 'PATCH':
+                return [
+                     //'codigo'=> 'required|min:2|max:15|unique:programa',
+                     'nombre' => 'required|min:3|max:50',
+                     'semestres' => 'required',
+                     'creditos' => 'required',
+                     //'escuela' => 'required|min:3|max:30',
+                     //'director' => 'required|min:3|max:15|unique:programa',
+                ];
+                break;    
+            
+            default:
+                # code...
+                break;
         }
-        return $rules;
     }
 }

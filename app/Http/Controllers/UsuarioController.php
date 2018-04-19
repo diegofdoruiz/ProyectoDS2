@@ -36,7 +36,8 @@ abstract class UsuarioController extends Controller
     }
     public function create(){
     	$roles = \DB::table('rol')->where('estado', '=', '1')->get();
-    	return view("aplicacion.usuario.create", ["roles"=>$roles]);
+        $escuelas = \DB::table('escuela')->where('estado', '=', '1')->get();
+    	return view("aplicacion.usuario.create", ["roles"=>$roles, "escuelas"=>$escuelas]);
     }
     public function store(UsuarioFormRequest $request){
 		$usuario = new Usuario;
@@ -52,6 +53,7 @@ abstract class UsuarioController extends Controller
 		$usuario->password=bcrypt($request->get('password'));
         $usuario->remember_token=str_random(10);
 		$usuario->estado='1';
+        $usuario->codigo_escuela=$request->get('escuela');
 		$usuario->save();
 		return Redirect::to('usuario');
     }
@@ -60,7 +62,8 @@ abstract class UsuarioController extends Controller
     }
     public function edit($codigo){
     	$roles = \DB::table('rol')->where('estado', '=', '1')->get();
-    	return view("aplicacion.usuario.edit", ["usuario"=>Usuario::findOrFail($codigo)], ["roles"=>$roles]);
+        $escuelas = \DB::table('escuela')->where('estado', '=', '1')->get();
+    	return view("aplicacion.usuario.edit", ["usuario"=>Usuario::findOrFail($codigo)], ["roles"=>$roles, "escuelas"=>$escuelas]);
     }
     public function update(UsuarioFormRequest $request, $codigo){
     	$usuario=Usuario::findOrFail($codigo);
@@ -77,6 +80,7 @@ abstract class UsuarioController extends Controller
             $usuario->password=bcrypt($request->get('password'));
         }
         $usuario->remember_token=str_random(10);
+        $usuario->codigo_escuela=$request->get('escuela');
     	$usuario->update();
     	return Redirect::to('usuario');
     }

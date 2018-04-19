@@ -75,6 +75,20 @@
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
+				<label for="escuela">Escuela</label>
+				<select name="escuela" class="form-control">
+					@foreach ($escuelas as $escuela)
+						@if($escuela->codigo == $usuario->codigo_escuela)
+							<option value="{{$escuela->codigo}}" selected>{{$escuela->nombre}}</option>
+						@else
+							<option value="{{$escuela->codigo}}">{{$escuela->nombre}}</option>
+						@endif
+					@endforeach
+				</select>
+			</div>
+		</div>
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<div class="form-group">
 				<label for="email">Correo</label>
 				<input type="text" name="email" class="form-control" value="{{$usuario->email}}" placeholder="Ej pepito@gmail.com" disabled>
 			</div>

@@ -137,26 +137,30 @@
         <strong>Copyright &copy; 2018-2020 <a href="www.univalle.edu.co"> Univalle - Ingeniería de Sistemas</a>.</strong> All rights reserved.
       </footer>
     <script type="text/javascript">
-        function validar(){
-          var creditos = parseInt(document.getElementById("creditos").value);
-          var magistrales = parseInt(document.getElementById('magistrales').value);
-          var independientes = parseInt(document.getElementById('independientes').value);
-          var semanal1 = creditos*3;
-          var semanal2 = magistrales+independientes;
-          if(semanal1 == 0 || semanal2 == 0){
-            alert("Por favor seleccione valores válidos: \n"+
-                  "Créditos x 3 = "+ semanal1.toString()+"\n"+
-                  "Magistrales + independientes = "+semanal2.toString());
-            return false;
-          }else if(semanal1 != semanal2){
-            alert("Las horas de trabajo semanal no coinciden: \n" +
-                  "Créditos x 3 = "+ semanal1.toString()+"\n"+
-                  "Magistrales + independientes = "+semanal2.toString());
-            return false;
-          }else{
-            return true;
-          }
-        }
+        document.getElementById("btn_pre").addEventListener("click", function(){
+            alert('gsgas');
+        });
+
+        document.getElementById("guardar").addEventListener("click", function(){
+            var creditos = parseInt(document.getElementById("creditos").value);
+            var magistrales = parseInt(document.getElementById('magistrales').value);
+            var independientes = parseInt(document.getElementById('independientes').value);
+            var semanal1 = creditos*3;
+            var semanal2 = magistrales+independientes;
+            if(semanal1 == 0 || semanal2 == 0){
+              alert("Por favor seleccione valores válidos: \n"+
+                    "Créditos x 3 = "+ semanal1.toString()+"\n"+
+                    "Magistrales + independientes = "+semanal2.toString());
+              return false;
+            }else if(semanal1 != semanal2){
+              alert("Las horas de trabajo semanal no coinciden: \n" +
+                    "Créditos x 3 = "+ semanal1.toString()+"\n"+
+                    "Magistrales + independientes = "+semanal2.toString());
+              return false;
+            }else{
+              return true;
+            }
+          });
     </script>
       
     <!-- jQuery 2.1.4 -->

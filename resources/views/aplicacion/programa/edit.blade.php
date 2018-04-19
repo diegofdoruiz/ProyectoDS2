@@ -43,36 +43,18 @@
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<label for="escuela">Escuela</label>
-				<select name="escuela" class="form-control">
-					@foreach ($escuelas as $escuela)
-						@if($escuela->codigo == $programa->codigo_escuela)
-							<option value="{{$escuela->codigo}}" selected>{{$escuela->nombre}}</option>
-						@else
-							<option value="{{$escuela->codigo}}">{{$escuela->nombre}}</option>
-						@endif
-					@endforeach
+				<label for="escuela">Escuela</label> 
+				<select name="escuela" class="form-control" readonly>
+					<option value="{{$escuela->codigo}}" selected >{{$escuela->nombre}}</option>
 				</select>
 			</div>
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<label for="director">Director de plan</label>
-				<select name="director" class="form-control">
-					@foreach ($directores as $director)
-						@if($director->codigo == $programa->codigo)
-							<option value="{{$director->codigo}}" selected>{{$director->primer_nombre}} {{$director->primer_apellido}}</option>
-						@else
-							<option value="{{$director->codigo}}">{{$director->primer_nombre}} {{$director->primer_apellido}}</option>
-						@endif
-					@endforeach
+				<label for="director">Creador del plan</label>
+				<select name="director" class="form-control" readonly>
+					<option value="{{$usuario->codigo}}" selected >{{$usuario->primer_nombre}} {{$usuario->primer_apellido}}</option>
 				</select>
-			</div>
-		</div>
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
-				<label for="estado">Estado</label>
-				<input type="text" name="estado" class="form-control" value="{{$programa->estado}}" placeholder="Ej 1">
 			</div>
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">

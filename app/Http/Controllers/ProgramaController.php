@@ -5,6 +5,7 @@ namespace proyectDs\Http\Controllers;
 use Illuminate\Http\Request;
 use proyectDs\Http\Requests;
 use proyectDs\Programa;
+use proyectDs\Escuela;
 use Illuminate\Support\Facades\Redirect;
 use proyectDs\Http\Requests\ProgramaFormRequest;
 use BD;
@@ -53,9 +54,9 @@ class ProgramaController extends Controller
     	}
     }
     public function create(){
-    	$escuelas = \DB::table('escuela')->where('estado', '=', '1')->get();
-        $directores = \DB::table('usuario')->where([['rol','=', '2'],['estado','=','1']])->get();
-    	return view("aplicacion.programa.create", ["escuelas"=>$escuelas, "directores"=>$directores]);
+    	$escuela = Escuela::findOrFail(auth()->user()->codigo_escuela);
+        $usuario = auth()->user();
+    	return view("aplicacion.programa.create", ["escuela"=>$escuela, "usuario"=>$usuario]);
     }
     public function store(ProgramaFormRequest $request){
 		$programa = new Programa;
@@ -73,9 +74,9 @@ class ProgramaController extends Controller
     	return view("aplicacion.programa.show", ["programa"=>Programa::findOrFail($codigo)]);
     }
     public function edit($codigo){
-    	$escuelas = \DB::table('escuela')->where('estado', '=', '1')->get();
-        $directores = \DB::table('usuario')->where([['rol','=','2'],['estado','=','1']])->get();
-    	return view("aplicacion.programa.edit", ["programa"=>Programa::findOrFail($codigo)], ["escuelas"=>$escuelas, "directores"=>$directores]);
+    	$escuela = Escuela::findOrFail(auth()->user()->codigo_escuela);
+        $usuario = auth()->user();
+    	return view("aplicacion.programa.edit", ["programa"=>Programa::findOrFail($codigo)], ["escuela"=>$escuela, "usuario"=>$usuario]);
     }
     public function update(ProgramaFormRequest $request, $codigo){
     	$programa=Programa::findOrFail($codigo);
@@ -83,9 +84,8 @@ class ProgramaController extends Controller
 		$programa->nombre=$request->get('nombre');
 		$programa->num_semestres=$request->get('semestres');
 		$programa->creditos=$request->get('creditos');
-		$programa->codigo_escuela=$request->get('escuela');
-        $programa->codigo_escuela=$request->get('escuela');
-		$programa->director=$request->get('director');
+		//$programa->codigo_escuela=$request->get('escuela');
+		//$programa->director=$request->get('director');
     	$programa->update();
     	return Redirect::to('programa');
     }
