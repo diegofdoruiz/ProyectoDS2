@@ -7,6 +7,7 @@ use proyectDs\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use proyectDs\Curso;
 use proyectDs\programa;
+use proyectDs\Prerequisito;
 use proyectDs\Http\Controllers\Singleton\LoginSingleton;
 use Illuminate\Support\Facades\Redirect;
 use proyectDs\Http\Requests\CursoFormRequest;
@@ -54,10 +55,10 @@ class CursoController extends Controller
     	}
     }
     public function create(){
-    	$programas = \DB::table('programa')->where('estado', '=', '1')->get();
+        $usuario = auth()->user();
+    	$programas = \DB::table('programa')->where([['estado', '=', '1'], ['codigo_escuela', '=', $usuario->codigo_escuela]])->get();
         $cursos = \DB::table('curso')->where('estado', '=', '1')->get();
-        $cursos1 = ['Curso1', 'Curso2', 'Curso3', 'Curso4'];
-    	return view("aplicacion.curso.create", ["programas"=>$programas, "cursos"=>$cursos1]);
+    	return view("aplicacion.curso.create", ["programas"=>$programas, "cursos"=>$cursos]);
     }
     public function store(CursoFormRequest $request){
         $codigo = auth()->user()->codigo;
@@ -74,7 +75,19 @@ class CursoController extends Controller
 		$curso->codigo_programa=$request->get('programa');
 		$curso->codigo_usuario=$codigo;
 		$curso->estado='1';
-		$curso->save();
+        $curso->save();
+        /*prerequisitos*/
+        $seleccionados = $request->get('seleccionados');
+        if($seleccionados!=NULL){
+            $array_prere = explode(' ', $seleccionados);
+            dd($array_prere[0], $array_prere[1]);
+            $prerequisito = new Prerequisito;
+            foreach ($array_prere as $pre) {
+                $prerequisito->codigo_curso=$request->get('codigo');
+                $prerequisito->codigo_pre=$pre;
+                $prerequisito->save();
+            }
+        }
 		return Redirect::to('curso');
     }
     public function show($codigo){
@@ -82,10 +95,14 @@ class CursoController extends Controller
     }
     public function edit($codigo){
     	$programas = \DB::table('programa')->where('estado', '=', '1')->get();
-    	return view("aplicacion.curso.edit", ["curso"=> Curso::findOrFail($codigo)], ["programas"=>$programas]);
+        $cursos = \DB::table('curso')->where('estado', '=', '1')->get();
+        $cursos_pre = \DB::table('curso')
+                    ->join('prerequisito', 'curso.codigo', '=', 'prerequisito.codigo_pre')
+                    ->where('prerequisito.codigo_curso', '=', $codigo)->get();
+    	return view("aplicacion.curso.edit", ["curso"=> Curso::findOrFail($codigo)], ["programas"=>$programas, "cursos"=>$cursos, "cursos_pre"=>$cursos_pre]);
     }
     public function update(CursoFormRequest $request, $codigo){
-        $codigo = auth()->user()->codigo;
+        $codigo_usuario = auth()->user()->codigo;
     	$curso=Curso::findOrFail($codigo);
 		$curso->nombre=$request->get('nombre');
 		$curso->creditos=$request->get('creditos');
@@ -96,9 +113,20 @@ class CursoController extends Controller
 		$curso->num_semestre=$request->get('semestre');
 		$curso->tipo=$request->get('tipo');
 		$curso->codigo_programa=$request->get('programa');
-		$curso->codigo_usuario=$codigo;
+		$curso->codigo_usuario=$codigo_usuario;
 		$curso->estado=$request->get('estado');
-    	$curso->update();
+        $curso->update();
+        /*prerequisitos*/
+        $seleccionados = $request->get('seleccionados');
+        if($seleccionados!=NULL){
+            $array_prere = explode(' ', $seleccionados);
+            $prerequisito = new Prerequisito;
+            foreach ($array_prere as $pre) {
+                $prerequisito->codigo_curso=$curso->codigo;
+                $prerequisito->codigo_pre=$pre;
+                $prerequisito->save();
+            }
+        }
     	return Redirect::to('curso');
     }
     public function destroy($codigo){

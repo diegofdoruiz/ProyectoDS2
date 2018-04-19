@@ -114,6 +114,33 @@
 				<input type="text" name="estado" class="form-control" value="{{$curso->estado}}" placeholder="Ej 1">
 			</div>
 		</div>
+	</div>
+	<div class="row">
+	    <div id="div_pre" class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+	        <p>
+	            <span class="glyphicon glyphicon-ok-circle"></span>
+	            <strong>Pre-requisitos </strong>
+	        </p>
+	        <ul id="pre_req" class="country-block" >
+	        	@foreach($cursos as $curso)
+	            	<li class="opt-sel" value ="{{$curso->codigo}}" onclick="return setPre(this)">{{$curso->nombre}}</li> 
+	        	@endforeach   
+	        </ul>
+	    </div>
+	    <div id="div_sel" class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+	        <p>
+	            <span class="glyphicon glyphicon-remove-circle"></span>
+	            <strong>Añadidos</strong>
+	        </p>
+	        <input type="hidden" id="seleccionados" name="seleccionados">
+	        <ul id="sel_req" class="country-block">
+	        	@foreach($cursos_pre as $curso_pre)
+	            	<li class="opt-sel" value ="{{$curso_pre->codigo}}" onclick="return setPre(this)">{{$curso_pre->nombre}}</li> 
+	        	@endforeach 
+	        </ul>
+	    </div>
+	</div>
+	<div class="row">
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<button class="btn btn-primary" type="submit">Guardar</button>

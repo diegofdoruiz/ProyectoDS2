@@ -14,7 +14,7 @@
 			@endif
 		</div>
 	</div>
-	{!! Form::open(array('url'=>'curso', 'method'=>'POST')) !!}
+	{!! Form::open(array('url'=>'curso', 'method'=>'POST', 'onsubmit'=>'return validate()')) !!}
 	{{ Form::token() }}
 	<div id="formulario" class="row">
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
@@ -108,35 +108,38 @@
 				</select>
 			</div>
 		</div>
+	</div> 
+	<div class="row">
+	    <div id="div_pre" class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+	        <p>
+	            <span class="glyphicon glyphicon-ok-circle"></span>
+	            <strong>Pre-requisitos </strong>
+	        </p>
+	        <ul id="pre_req" class="country-block" >
+	        	@foreach($cursos as $curso)
+	            	<li class="opt-sel" value ="{{$curso->codigo}}" onclick="return setPre(this)">{{$curso->nombre}}</li> 
+	        	@endforeach   
+	        </ul>
+	    </div>
+	    <div id="div_sel" class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+	        <p>
+	            <span class="glyphicon glyphicon-remove-circle"></span>
+	            <strong>Añadidos</strong>
+	        </p>
+	        <input type="hidden" id="seleccionados" name="seleccionados">
+	        <ul id="sel_req" class="country-block">
+	        </ul>
+	    </div>
+	</div>
+	<div class="row">
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<button id="guardar" class="btn btn-primary" type="submit">Guardar</button>
 				<button class="btn btn-danger" type="reset">cancelar</button>
 			</div>
 		</div>
-	</div> 
-	<div class="row">
-                        <div class="col-xs-12 col-sm-6">
-                            <p>
-                                <span class="glyphicon glyphicon-ok-circle"></span>
-                                <strong>Pre-requisitos </strong>
-                            </p>
-                            <ul id="pre_req" class="country-block">
-                            	@foreach($cursos as $curso)
-                                	<li class="opt-sel" data-value="4" onclick="setPre(this)">{{$curso}}</li> 
-                            	@endforeach   
-                            </ul>
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <p>
-                                <span class="glyphicon glyphicon-remove-circle"></span>
-                                <strong>Añadidos</strong>
-                            </p>
-                            <ul id="sel_req" class="country-block">
-                                <li class="opt-sel" data-value="170">item</li>
-                            </ul>
-                        </div>
-                    </div>
+	</div>
+
 	{!! Form::close() !!}			
 @endsection
 

@@ -137,18 +137,21 @@
         <strong>Copyright &copy; 2018-2020 <a href="www.univalle.edu.co"> Univalle - Ingeniería de Sistemas</a>.</strong> All rights reserved.
       </footer>
     <script type="text/javascript">
-        function setPre(this){
-          alert(this.innerHTML);
+        //var div_pre = document.getElementById('div_pre').setAttribute('style', 'heigh:20px')
+        var seleccionados = '';
+        var input_seleccionados = document.getElementById('seleccionados');
+        input_seleccionados.value='';
+        function setPre(item){
+            var input_seleccionados = document.getElementById('seleccionados');
+            var ul = document.getElementById('sel_req');
+            ul.appendChild(item);
+            seleccionados = input_seleccionados.value;
+            seleccionados = seleccionados.concat(item.value+' ');
+            input_seleccionados.value=seleccionados;
+            seleccionados='';
+            return false;
         }
-        document.getElementById("btn_pre").addEventListener("click", function(){
-            alert('gsgas');
-        });
-
-        document.getElementById("pre_req").addEventListener("click", function(){
-            alert('gsgas');
-        });
-
-        document.getElementById("guardar").addEventListener("click", function(){
+        function validate(){
             var creditos = parseInt(document.getElementById("creditos").value);
             var magistrales = parseInt(document.getElementById('magistrales').value);
             var independientes = parseInt(document.getElementById('independientes').value);
@@ -167,7 +170,7 @@
             }else{
               return true;
             }
-          });
+          }
     </script>
       
     <!-- jQuery 2.1.4 -->
