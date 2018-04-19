@@ -137,7 +137,14 @@
         <strong>Copyright &copy; 2018-2020 <a href="www.univalle.edu.co"> Univalle - Ingeniería de Sistemas</a>.</strong> All rights reserved.
       </footer>
     <script type="text/javascript">
+        function setPre(this){
+          alert(this.innerHTML);
+        }
         document.getElementById("btn_pre").addEventListener("click", function(){
+            alert('gsgas');
+        });
+
+        document.getElementById("pre_req").addEventListener("click", function(){
             alert('gsgas');
         });
 

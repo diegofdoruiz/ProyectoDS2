@@ -55,7 +55,9 @@ class CursoController extends Controller
     }
     public function create(){
     	$programas = \DB::table('programa')->where('estado', '=', '1')->get();
-    	return view("aplicacion.curso.create", ["programas"=>$programas]);
+        $cursos = \DB::table('curso')->where('estado', '=', '1')->get();
+        $cursos1 = ['Curso1', 'Curso2', 'Curso3', 'Curso4'];
+    	return view("aplicacion.curso.create", ["programas"=>$programas, "cursos"=>$cursos1]);
     }
     public function store(CursoFormRequest $request){
         $codigo = auth()->user()->codigo;

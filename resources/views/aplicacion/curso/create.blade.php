@@ -110,17 +110,35 @@
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<label for="programa">Pre-Requisitos</label>
-				<textarea name="prerequisitos" class="form-control" rows="3" style="margin-bottom:5px">añadir prerequisitos</textarea>
-				<button id="btn_pre" class="btn btn-info btn-sm btn-xs" onclick="prerequisitos()">Añadir Prerequisitos</button>
-			</div>
-		</div>
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
 				<button id="guardar" class="btn btn-primary" type="submit">Guardar</button>
 				<button class="btn btn-danger" type="reset">cancelar</button>
 			</div>
 		</div>
-	</div>
+	</div> 
+	<div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <p>
+                                <span class="glyphicon glyphicon-ok-circle"></span>
+                                <strong>Pre-requisitos </strong>
+                            </p>
+                            <ul id="pre_req" class="country-block">
+                            	@foreach($cursos as $curso)
+                                	<li class="opt-sel" data-value="4" onclick="setPre(this)">{{$curso}}</li> 
+                            	@endforeach   
+                            </ul>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <p>
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <strong>Añadidos</strong>
+                            </p>
+                            <ul id="sel_req" class="country-block">
+                                <li class="opt-sel" data-value="170">item</li>
+                            </ul>
+                        </div>
+                    </div>
 	{!! Form::close() !!}			
 @endsection
+
+
+
