@@ -17,7 +17,7 @@ use BD;
 class CursoController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
     public function index(Request $request){
         $codigo_usuario = auth()->user()->codigo;
