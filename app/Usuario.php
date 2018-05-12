@@ -16,7 +16,6 @@ class Usuario extends Authenticatable
     public $timestamps=false;
     protected $fillable = [
     	'codigo', 
-        'cedula', 
         'primer_nombre', 
         'segundo_nombre', 
         'primer_apellido', 

@@ -17,6 +17,49 @@
     <link rel="stylesheet" href="{{asset('css/_all-skins.min.css')}}">
     <link rel="apple-touch-icon" href="{{asset('img/apple-touch-icon.png')}}">
     <link rel="shortcut icon" href="{{asset('img/logo')}}">
+    <style type="text/css">
+        .lista-programas{
+          font-size: 15px;
+          border-radius: 4px;
+          border: 1px solid #c9c9c9;
+          background: #EBF5FB;
+          /*margin: 0;*/
+          padding-left: 2px;
+          padding-right: 2px;
+          height: 150px;
+          overflow-y: scroll;
+        }
+        .curso-prerequisito{
+          font-size: 15px;
+          border-radius: 4px;
+          border: 1px solid #d9d9d9;
+          background: #E8F8F5;
+          /*margin: 0;*/
+          padding-left: 2px;
+          padding-right: 2px;
+          height: 150px;
+          overflow-y: scroll;
+        }
+        .opt-sel {
+          cursor: pointer;
+          background: #EBEDEF;
+          border: 0.5px solid #d9d9d9;
+          border-radius: 2px;
+          font-size: 14px;
+          margin-top: 3px;
+          margin-bottom: 3px;
+          max-width: 100%;
+          text-overflow:ellipsis;
+          white-space:nowrap;
+          overflow:hidden;
+        }
+        .opt-sel:hover{
+          background: #F8F9F9;
+          border-radius: 2px;
+          white-space: initial;
+          overflow:visible;
+        }
+    </style>
 
   </head>
   <body style="font-family:'Courier';" class="hold-transition skin-red sidebar-mini">
@@ -123,6 +166,7 @@
                                 <div class="alert alert-info">{{ session('flash') }}</div>
                               @endif
                               @yield('contenido')
+                              @yield('scripts')
 		                          <!--Fin Contenido-->
                   	</div><!-- /.row -->
                 </div><!-- /.box-body -->
@@ -136,49 +180,13 @@
         </div>
         <strong>Copyright &copy; 2018-2020 <a href="www.univalle.edu.co"> Univalle - Ingeniería de Sistemas</a>.</strong> All rights reserved.
       </footer>
-    <script type="text/javascript">
-        //var div_pre = document.getElementById('div_pre').setAttribute('style', 'heigh:20px')
-        var seleccionados = '';
-        var input_seleccionados = document.getElementById('seleccionados');
-        input_seleccionados.value='';
-        function setPre(item){
-            var input_seleccionados = document.getElementById('seleccionados');
-            var ul = document.getElementById('sel_req');
-            ul.appendChild(item);
-            seleccionados = input_seleccionados.value;
-            seleccionados = seleccionados.concat(item.value+' ');
-            input_seleccionados.value=seleccionados;
-            seleccionados='';
-            return false;
-        }
-        function validate(){
-            var creditos = parseInt(document.getElementById("creditos").value);
-            var magistrales = parseInt(document.getElementById('magistrales').value);
-            var independientes = parseInt(document.getElementById('independientes').value);
-            var semanal1 = creditos*3;
-            var semanal2 = magistrales+independientes;
-            if(semanal1 == 0 || semanal2 == 0){
-              alert("Por favor seleccione valores válidos: \n"+
-                    "Créditos x 3 = "+ semanal1.toString()+"\n"+
-                    "Magistrales + independientes = "+semanal2.toString());
-              return false;
-            }else if(semanal1 != semanal2){
-              alert("Las horas de trabajo semanal no coinciden: \n" +
-                    "Créditos x 3 = "+ semanal1.toString()+"\n"+
-                    "Magistrales + independientes = "+semanal2.toString());
-              return false;
-            }else{
-              return true;
-            }
-          }
-    </script>
-      
     <!-- jQuery 2.1.4 -->
     <script src="{{asset('js/jQuery-2.1.4.min.js')}}"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('js/app.min.js')}}"></script>
+    <!-- Script para manejar funciones del la web -->
     </div>
   </body>
 </html>

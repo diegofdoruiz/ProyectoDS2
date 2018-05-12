@@ -35,7 +35,6 @@ class CursoFormRequest extends FormRequest
                      'habilitacion' => 'required|min:1|max:5',
                      'semestre' => 'required|digits_between: 1,15',
                      'tipo' => 'required',
-                     'programa' => 'required|min:3|max:15',
                 ];
                 break;
             case 'PATCH':
@@ -48,7 +47,6 @@ class CursoFormRequest extends FormRequest
                     'habilitacion' => 'required|min:1|max:5',
                     'semestre' => 'required|digits_between: 1,15',
                     'tipo' => 'required',
-                    'programa' => 'required|min:3|max:15',
                 ];
                 break;    
             

@@ -27,7 +27,6 @@ class UsuarioFormRequest extends FormRequest
             case 'POST':
                 return [
                     'codigo' => 'required|min:5|max:15|unique:usuario',
-                    'cedula' => 'required|min:3|max:30|unique:usuario',
                     'primer_nombre' => 'required|min:3|max:30',
                     'segundo_nombre' => 'max:30',
                     'primer_apellido' => 'required|min:3|max:30',

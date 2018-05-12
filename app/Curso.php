@@ -20,7 +20,6 @@ class Curso extends Model
     	'habilitacion',
     	'num_semestre',
     	'tipo',
-    	'codigo_programa',
     	'codigo_usuario',
     	'estado'
     ];

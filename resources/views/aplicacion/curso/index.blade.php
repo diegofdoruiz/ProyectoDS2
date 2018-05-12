@@ -11,17 +11,16 @@
 			<div class="table-responsive">
 				<table class="table table-striped table-bordered table-condensed table-hover">
 					<thead>
-						<th>Código</th>
-						<th>Nombre</th>
-					    <th>Créditos</th>
-					    <th>Horas magistrales</th>
-					    <th>Estudio Independiente</th>
-					    <th>Validable</th>
-					    <th>Habilitable</th>
-					    <th>Semestre</th>
-					    <th>Tipo</th>
-					    <th>Programa</th>
-					    <th>Estado</th>
+						<th style="width:50px; font-size: 12px;">Código</th>
+						<th style="width:30px; font-size: 12px;">Nombre</th>
+					    <th style="width:30px; font-size: 12px;">Créditos</th>
+					    <th style="width:30px; font-size: 12px;">Horas magistrales</th>
+					    <th style="width:30px; font-size: 12px;">Estudio Independiente</th>
+					    <th style="width:30px; font-size: 12px;">Validable</th>
+					    <th style="width:30px; font-size: 12px;">Habilitable</th>
+					    <th style="width:30px; font-size: 12px;">Semestre</th>
+					    <th style="width:30px; font-size: 12px;">Tipo</th>
+					    <!--<th>Estado</th>-->
 					    <th>Opciones</th>
 					</thead>
 					@foreach ($cursos as $curso)
@@ -35,11 +34,12 @@
 						<td>{{ $curso->habilitacion }}</td>
 						<td>{{ $curso->num_semestre }}</td>
 						<td>{{ $curso->tipo }}</td>
-						<td>{{ $curso->codigo_programa }}</td>
-						<td>{{ $curso->estado }}</td>
+						<!--<td>{{ $curso->estado }}</td>-->
 						<td>
-							<a href="{{ URL::action('CursoController@edit', $curso->codigo) }}"><button class="btn btn-info">Editar</button></a>
-							<a href="" data-target="#modal-delete-{{$curso->codigo}}" data-toggle="modal"><button class="btn btn-danger">Eliminar</button></a>
+							<div class="btn-group btn-group-sm" role="group" aria-label="buttons">
+								<a href="{{ URL::action('CursoController@edit', $curso->codigo) }}"><button type="button" class="btn btn-info">Editar</button></a>
+								<a href="" data-target="#modal-delete-{{$curso->codigo}}" data-toggle="modal"><button type="button" class="btn btn-danger">Eliminar</button></a>
+							</div>
 						</td>
 					</tr>
 					@include('aplicacion.curso.modal')

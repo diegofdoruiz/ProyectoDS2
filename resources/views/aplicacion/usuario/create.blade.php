@@ -25,12 +25,6 @@
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<label for="cedula">Cédula</label>
-				<input type="text" name="cedula" class="form-control" value="{{old('cedula')}}" placeholder="Cédula...">
-			</div>
-		</div>
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
 				<label for="primer_nombre">Primer Nombre</label>
 				<input type="text" name="primer_nombre" class="form-control" value="{{old('primer_nombre')}}" placeholder="Ej Pepito...">
 			</div>

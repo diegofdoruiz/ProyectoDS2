@@ -25,12 +25,6 @@
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<label for="cedula">Cédula</label>
-				<input type="text" name="cedula" class="form-control" value="{{$usuario->cedula}}" placeholder="Cédula..." disabled>
-			</div>
-		</div>
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
 				<label for="primer_nombre">Primer Nombre</label>
 				<input type="text" name="primer_nombre" class="form-control" value="{{$usuario->primer_nombre}}" placeholder="Ej Pepito...">
 			</div>
@@ -56,7 +50,7 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label for="name">Username</label>
-				<input type="text" name="name" class="form-control" value="{{$usuario->name}}" placeholder="Ej Peperez.." disabled>
+				<input type="text" name="name" class="form-control" value="{{$usuario->name}}" placeholder="Ej Peperez..">
 			</div>
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
@@ -90,7 +84,7 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label for="email">Correo</label>
-				<input type="text" name="email" class="form-control" value="{{$usuario->email}}" placeholder="Ej pepito@gmail.com" disabled>
+				<input type="text" name="email" class="form-control" value="{{$usuario->email}}" placeholder="Ej pepito@gmail.com">
 			</div>
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">

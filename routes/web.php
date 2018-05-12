@@ -26,8 +26,7 @@ Route::get('nologin', 'DashBoardController@index')->name('nologin');
 Route::get('dashboard', 'MyLoginController@dashboard')->name('dashboard');
 Route::resource('rol', 'RolController');
 Route::resource('programa', 'ProgramaController');
-Route::resource('curso', 'CursoController');	
-
-
+Route::resource('curso', 'CursoController');
+Route::get('prerequisitos', 'CursoController@getPrerequisitos');
 
 

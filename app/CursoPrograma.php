@@ -4,15 +4,15 @@ namespace proyectDs;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Prerequisito extends Model
+class CursoPrograma extends Model
 {
-    protected $table='prerequisito';
+    protected $table='cursos_programas';
     protected $primaryKey='id';
     //public $incrementing = false;
     public $timestamps=false;
     protected $fillable = [
     	'codigo_curso',
-    	'codigo_pre',
+    	'codigo_programa',
     ];
     protected $guarded = [];
 }

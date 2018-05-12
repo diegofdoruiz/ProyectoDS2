@@ -26,24 +26,9 @@
 						<td>{{ $usuario->primer_nombre }}</td>
 						<td>{{ $usuario->primer_apellido }}</td>
 						<td>{{ $usuario->name }}</td>
-						@switch($usuario->rol)
-					    @case(1)
-					        <td>Docente</td>
-					        @break
-					    @case(2)
-					        <td>Dir Plan</td>
-					        @break
-					    @case(3)
-					        <td>Decano</td>
-					        @break
-					    @case(4)
-					        <td>Administrador</td>
-					        @break
-					    @default
-					        <td>Nada</td>
-						@endswitch
+					    <td>{{$usuario->rol}}</td>
 						<td class="col-md-2">{{ $usuario->email }}</td>
-						<td>{{ $usuario->codigo_escuela }}</td>
+						<td>{{ $usuario->nombre }}</td>
 						<td>
 							<a href="{{ URL::action('Strategy\UsuarioDecano@edit', $usuario->codigo) }}"><button class="btn btn-info btn-sm">Editar</button></a>
 							<a href="" data-target="#modal-delete-{{$usuario->codigo}}" data-toggle="modal"><button class="btn btn-danger btn-sm">Eliminar</button></a>
