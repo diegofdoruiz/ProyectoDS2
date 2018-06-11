@@ -9,6 +9,15 @@ use proyectDs\Curso;
 use proyectDs\Programa;
 use proyectDs\Prerequisito;
 use proyectDs\CursoPrograma;
+use proyectDs\Competencia;
+use proyectDs\ResultadoAprendizaje;
+use proyectDs\IndicadorLogro;
+use proyectDs\ActividadFormacion;
+use proyectDs\ActividadEvaluacion;
+use proyectDs\Verbo;
+use proyectDs\Contenido;
+use proyectDs\Contexto;
+use proyectDs\Proposito;
 use proyectDs\Http\Controllers\Singleton\LoginSingleton;
 use Illuminate\Support\Facades\Redirect;
 use proyectDs\Http\Requests\CursoFormRequest;
@@ -17,7 +26,7 @@ use BD;
 class CursoController extends Controller
 {
     public function __construct(){
-        //$this->middleware('auth');
+        $this->middleware('auth');
     }
     public function index(Request $request){
         $codigo_usuario = auth()->user()->codigo;
@@ -105,9 +114,21 @@ class CursoController extends Controller
         }
 		return Redirect::to('curso');
     }
+
+
     public function show($codigo){
-    	return view("aplicacion.curso.show", ["curso"=>Curso::findOrFail($codigo)]);
+        $verbos = Verbo::all();
+        $contenidos = Contenido::all();
+        $contextos = Contexto::all();
+        $propositos = Proposito::all(); 
+    	return view("aplicacion.curso.show", ["curso"=>Curso::findOrFail($codigo),
+                                              "verbos"=>$verbos,
+                                              "contenidos"=>$contenidos,
+                                              "contextos"=>$contextos,
+                                              "propositos"=>$propositos]);
     }
+
+
     public function edit($codigo){
         $programas_curso = \DB::table('programa')
                                 ->join('cursos_programas', 'programa.codigo', '=', 'cursos_programas.codigo_programa')
@@ -198,5 +219,129 @@ class CursoController extends Controller
                     ->addSelect('codigo', 'nombre', 'num_semestre')->get();
         return response($cursos, 200)
                   ->header('Content-Type', 'text/plain');
+    }
+
+    public function crearCompetencia(Request $request){
+        $competencia_json_str = $request->get('data');
+        # Get as an object
+        $competencia_json_obj = json_decode($competencia_json_str, true);
+
+        $comp_curso = $competencia_json_obj['curso'];
+        $comp_descripcion = $competencia_json_obj['descripcion'];
+        $comp_res_aprendizaje = $competencia_json_obj['resultados_aprendizaje'];
+        $curso = Curso::findOrFail($comp_curso);  
+        if($curso->codigo == $comp_curso){
+            $competencia = new Competencia;
+            $competencia->descripcion = $comp_descripcion;
+            $competencia->codigo_curso = $comp_curso;
+            $saved_comp = $competencia->save();
+            if($saved_comp){
+                $last_index_compet = Competencia::max('codigo'); //Obtener el último indice de la tabla de competencias. 
+                foreach ($comp_res_aprendizaje as $r_a) {
+                    $r_a_descripcion = $r_a['descripcion'];
+                    $r_a_act_form = $r_a['actividades_formacion'];
+                    $r_a_ind_logro = $r_a['indicadores_logro'];
+
+                    $res_aprendizaje = new ResultadoAprendizaje;
+                    $res_aprendizaje->descripcion = $r_a_descripcion;
+                    $res_aprendizaje->codigo_competencia = $last_index_compet;
+                    $saved_r_a = $res_aprendizaje->save();
+                    if($saved_r_a){ 
+                        $last_index_r_a = ResultadoAprendizaje::max('codigo'); //Obtener el último indice de la tabla de res de aprendizaje.
+                        foreach ($r_a_act_form as $a_f) {
+                            $act_form = new ActividadFormacion;
+                            $act_form->nombre = $a_f['name'];
+                            $act_form->descripcion = $a_f['description'];
+                            $act_form->codigo_res_aprendizaje = $last_index_r_a;
+                            $act_form->save();
+                        }
+                        $var = "OK";
+                        foreach ($r_a_ind_logro as $i_l) {
+                            $actis_eval = $i_l['actividades_evaluacion'];
+                            $indic_logro = new IndicadorLogro;
+                            $indic_logro->descripcion = $i_l['descripcion'];
+                            $indic_logro->codigo_res_aprendizaje = $last_index_r_a;
+                            $saved_i_l = $indic_logro->save();
+                            if($saved_i_l){
+                                $last_index_i_l = IndicadorLogro::max('codigo'); //Obtener el último indice de la tabla de indicadores de logros. 
+                                foreach ($actis_eval as $a_e) {
+                                    $act_eval = new ActividadEvaluacion;
+                                    $act_eval->nombre = $a_e['name'];
+                                    $act_eval->descripcion = $a_e['descripcion'];
+                                    $act_eval->codigo_indicador_logro = $last_index_i_l;
+                                    $act_eval->save();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return response("OK", 200)
+                ->header('Content-Type', 'text/plain');
+        }else{
+            return response("No exixte el curso", 200)
+                   ->header('Content-Type', 'text/plain');
+        }
+    }
+
+    public function eliminarCompetencia(Request $request){
+        $codigo_competencia = $request->get('competencia');
+        $deleted = Competencia::destroy($codigo_competencia);
+        if($deleted){
+            return response("OK", 200)
+                   ->header('Content-Type', 'text/plain');
+        }
+
+    }
+
+    public function getCompetencias(Request $request){
+        $codigo_curso = $request->get('codigo');
+        $competencias = Competencia::where('codigo_curso', '=', $codigo_curso)->orderBy('codigo', 'asc')->get();
+        $competencias_array = [];
+        foreach ($competencias as $competencia) {
+            $codigo_comp = $competencia->codigo;
+            $descrip_comp = $competencia->descripcion;
+            $res_aprendizaje = ResultadoAprendizaje::where('codigo', '=', $competencia->codigo)->orderBy('codigo', 'asc')->get();
+            $res_aprendizaje_array = [];  
+            foreach ($res_aprendizaje as $r_a_s){
+                $r_a_codigo = $r_a_s->codigo;
+                $r_a_descripcion = $r_a_s->descripcion;
+                $r_a_activ_form = ActividadFormacion::where('codigo_res_aprendizaje', '=', $r_a_codigo)->orderBy('codigo', 'asc')->get();
+                $r_a_indis_logro = IndicadorLogro::where('codigo_res_aprendizaje', '=', $r_a_codigo)->orderBy('codigo', 'asc')->get();
+                $actis_form_array = [];
+                foreach ($r_a_activ_form as $a_f_s) {
+                    $a_f_name = $a_f_s->nombre;
+                    $a_f_descripcion = $a_f_s->descripcion;
+                    $a_f_array = array("name"=>$a_f_name, "descripcion"=>$a_f_descripcion);
+                    array_push($actis_form_array, $a_f_array);
+                }
+                $indis_logro_array = [];
+                foreach ($r_a_indis_logro as $i_l_s) {
+                    $i_l_codigo = $i_l_s->codigo;
+                    $i_l_descripcion = $i_l_s->descripcion;
+                    $i_l_actis_eval = ActividadEvaluacion::where('codigo_indicador_logro', '=', $i_l_codigo)->orderBy('codigo', 'asc')->get();
+
+                    $actis_eval_array = [];
+                    foreach ($i_l_actis_eval as $a_e_s) {
+                        $a_e_name = $a_e_s->nombre;
+                        $a_e_descripcion = $a_e_s->descripcion;
+                        $a_e_array = array("name"=>$a_e_name, "descripcion"=>$a_e_descripcion);
+                        array_push($actis_eval_array, $a_e_array);
+                    }
+                    $i_l_array = array("descripcion" => $i_l_descripcion, "actividades_evaluacion" => $actis_eval_array);
+                    array_push($indis_logro_array, $i_l_array);
+                }
+
+                $r_a_array = array("descripcion" => $r_a_descripcion, "actividades_formacion" => $actis_form_array, "indicadores_logro" => $indis_logro_array);
+                array_push($res_aprendizaje_array, $r_a_array);
+            }
+            $competencia_array = array("codigo_competencia" => $codigo_comp, "descripcion" => $descrip_comp, "resultados_aprendizaje" => $res_aprendizaje_array);
+            array_push($competencias_array, $competencia_array);
+        }
+        $json_response = array("competencias" => $competencias_array);
+
+
+        return response(json_encode($json_response), 200)
+               ->header('Content-Type', 'application/json; charset=utf-8');
     }
 }

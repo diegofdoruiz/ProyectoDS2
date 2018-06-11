@@ -28,5 +28,8 @@ Route::resource('rol', 'RolController');
 Route::resource('programa', 'ProgramaController');
 Route::resource('curso', 'CursoController');
 Route::get('prerequisitos', 'CursoController@getPrerequisitos');
+Route::get('crear_competencia', 'CursoController@crearCompetencia');
+Route::get('eliminar_competencia', 'CursoController@eliminarCompetencia');
+Route::get('get_competencias', 'CursoController@getCompetencias');
 
 

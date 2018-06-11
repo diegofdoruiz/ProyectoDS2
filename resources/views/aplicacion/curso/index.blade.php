@@ -25,15 +25,15 @@
 					</thead>
 					@foreach ($cursos as $curso)
 					<tr>
-						<td>{{ $curso->codigo }}</td>
-						<td>{{ $curso->nombre }}</td>
-						<td>{{ $curso->creditos }}</td>
-						<td>{{ $curso->horas_magistrales }}</td>
-						<td>{{ $curso->horas_independientes }}</td>
-						<td>{{ $curso->validacion }}</td>
-						<td>{{ $curso->habilitacion }}</td>
-						<td>{{ $curso->num_semestre }}</td>
-						<td>{{ $curso->tipo }}</td>
+						<td><a href="{{ URL::action('CursoController@show', $curso->codigo) }}"> {{ $curso->codigo }} </a></td>
+						<td><a href="{{ URL::action('CursoController@show', $curso->codigo) }}"> {{ $curso->nombre }} </a></td>
+						<td><a href="{{ URL::action('CursoController@show', $curso->codigo) }}"> {{ $curso->creditos }} </a></td>
+						<td><a href="{{ URL::action('CursoController@show', $curso->codigo) }}"> {{ $curso->horas_magistrales }} </a></td>
+						<td><a href="{{ URL::action('CursoController@show', $curso->codigo) }}"> {{ $curso->horas_independientes }} </a></td>
+						<td><a href="{{ URL::action('CursoController@show', $curso->codigo) }}"> {{ $curso->validacion }} </a></td>
+						<td><a href="{{ URL::action('CursoController@show', $curso->codigo) }}"> {{ $curso->habilitacion }} </a></td>
+						<td><a href="{{ URL::action('CursoController@show', $curso->codigo) }}"> {{ $curso->num_semestre }} </a></td>
+						<td><a href="{{ URL::action('CursoController@show', $curso->codigo) }}"> {{ $curso->tipo }} </a></td>
 						<!--<td>{{ $curso->estado }}</td>-->
 						<td>
 							<div class="btn-group btn-group-sm" role="group" aria-label="buttons">
