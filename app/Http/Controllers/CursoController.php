@@ -301,7 +301,7 @@ class CursoController extends Controller
         foreach ($competencias as $competencia) {
             $codigo_comp = $competencia->codigo;
             $descrip_comp = $competencia->descripcion;
-            $res_aprendizaje = ResultadoAprendizaje::where('codigo', '=', $competencia->codigo)->orderBy('codigo', 'asc')->get();
+            $res_aprendizaje = ResultadoAprendizaje::where('codigo_competencia', '=', $codigo_comp)->orderBy('codigo', 'asc')->get();
             $res_aprendizaje_array = [];  
             foreach ($res_aprendizaje as $r_a_s){
                 $r_a_codigo = $r_a_s->codigo;
