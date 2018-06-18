@@ -639,11 +639,7 @@
                 	div_competencia.appendChild(btn_borrar);
 
                 	//Div temporal para separar las competencias
-                	var div_borrar = document.createElement("DIV");
-                	var p_borrar = document.createElement("P");
-                	p_borrar.innerHTML = "------------------------------     Fin de competencia      ------------------------------";
-                	div_borrar.appendChild(p_borrar);
-                	div_competencia.appendChild(div_borrar);
+                	
 
                 	div_competencias.appendChild(div_competencia);
                 }//end for competencias

@@ -62,7 +62,7 @@
     </style>
 
   </head>
-  <body style="font-family:'Courier';" class="hold-transition skin-red sidebar-mini">
+  <body class="hold-transition skin-red sidebar-mini">
     <div class="wrapper">
 
       <header class="main-header">
