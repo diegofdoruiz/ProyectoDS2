@@ -1,139 +1,166 @@
 @extends ('layouts.admin')
 @section ('contenido')
-	<label id="" for="">Codigo:</label>
-	<input id="curso-id" type="text" name="" class="" value="{{$curso->codigo}}" placeholder="">
 
-	<label id="" for="">Nombre:</label>
-	<input type="text" id="" name="" class="" value="{{$curso->nombre}}" placeholder="">
-
-	<label id="" for="">Créditos:</label>
-	<input type="text" id="" name="" class="" value="{{$curso->creditos}}" placeholder="">
-
-	<label id="" for="">Horas Magistrales:</label>
-	<input type="text" id="" name="" class="" value="{{$curso->horas_magistrales}}" placeholder="">
-
-	<label id="" for="">Horas de trabajo independiente:</label>
-	<input type="text" id="" name="" class="" value="{{$curso->horas_independientes}}" placeholder="">
-
-	<label id="" for="">Validable:</label>
-	<input type="text" id="" name="" class="" value="{{$curso->validacion}}" placeholder="">
-
-	<label id="" for="">Habilitable:</label>
-	<input type="text" id="" name="" class="" value="{{$curso->habilitacion}}" placeholder="">
-
-	<label id="" for="">Número de semestre</label>
-	<input type="text" id="" name="" class="" value="{{$curso->num_semestre}}" placeholder="">
-
-	<label id="" for="">Tipo:</label>
-	<input type="text" id="" name="" class="" value="{{$curso->tipo}}" placeholder="">
-
-	<label id="" for="">Creado por: Hacer join</label>
-	<input type="text" id="" name="" class="" value="{{$curso->codigo_usuario}}" placeholder="">
-
-	<label id="" for="">Estado</label>
-	<input type="text" id="" name="" class="" value="{{$curso->estado}}" placeholder="">
+	<H1 style="font-size: 30px; font-weight: bold;">{{$curso->nombre}} {{$curso->codigo}} ({{$curso->creditos}} créditos)</H1>
+	<input id="curso-id" type="hidden" name="" class="" value="{{$curso->codigo}}" placeholder="">
 
 	<div id="competencias">
-		<H2 style="font-weight: bold;">Competencias:</H4>
+		<H5 style="text-align: center;">A continuación se encuentran las competencias que se espera los estudiantes hayan adquirido al finalizar el curso.</H5>
 	</div>
 
-	<button id="btn-crear-competencia" data-toggle="collapse" data-target="#crearcompetencia">Agregar competencia</button>
+<button style="margin-left: 40%; margin-top: 1%; margin-bottom: 2%" id="btn-crear-competencia" type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearcompetencia" data-whatever="Nueva Competencia">NUEVA COMPETENCIA</button>
 
-	<div id="crearcompetencia" class="collapse" style="background: #EAF2F8; padding: 10px">
-		<p>Nueva competencia.</p>
-    	<label id="" for="">Descripción</label>
-		<input id="competencia-txt" type="text" name="" class="" value="" placeholder="Ingrese descripción">
-		<div id="r-a-temp">
-			<H3 style="font-weight: bold;">Resultados de aprendizaje:</H4>
-		</div>
-		<button id="btn-crear-r-a" data-toggle="collapse" data-target="#crear-r-a">Agregar RA</button>
-		<div id="crear-r-a" class="collapse" style="background: #E8F8F5; padding: 10px">
-			<p>Nuevo resultado de aprendizaje.</p>
-			<!--Verbos para resultado de aprendizaje  -->
-			<select id="ra-select-verbo">
-				<option value="">Seleccione</option>
-				@foreach ($verbos as $verbo)
-					<option value="{{$verbo->verbo}}">{{ $verbo->verbo }}</option>
-				@endforeach
-			</select>
-			<!--Contenidos para resultado de aprendizaje -->
-			<select id="ra-select-contenido">
-				<option value="">Seleccione</option>
-				@foreach ($contenidos as $contenido)
-					<option value="{{$contenido->contenido}}">{{ $contenido->contenido }}</option>
-				@endforeach
-			</select>
-			<!--Contextos para resultado de aprendizaje -->
-			<select id="ra-select-contexto">
-				<option value="">Seleccione</option>
-				@foreach ($contextos as $contexto)
-					<option value="{{$contexto->contexto}}">{{ $contexto->contexto }}</option>
-				@endforeach
-			</select>
-			<!--Propósitos para resultado de aprendizaje -->
-			<select id="ra-select-proposito">
-				<option value="">Seleccione</option>
-				@foreach ($propositos as $proposito)
-					<option value="{{$proposito->proposito}}">{{ $proposito->proposito }}</option>
-				@endforeach
-			</select>
-			<div id="a-f-temp">
-				<H4 style="font-weight: bold;">Actividades de formación:</H4>
-			</div>
-			<div id="i-l-temp">
-				<H4 style="font-weight: bold;">Indicadores de logro:</H4>
-			</div>
-			<button id="btn-crear-a-f" data-toggle="collapse" data-target="#crear-a-f">Agregar actividad de formación</button>
-			<button id="btn-crear-i-l" data-toggle="collapse" data-target="#crear-i-l">Agregar IL</button>
-			<div id="crear-a-f" class="collapse" style="background: #F4ECF7; padding: 10px">
-				<p>Nueva actividad de formación.</p>
-				<label for="">Nombre</label>
-				<input type="text" id="a-f-nombre" name="" class="" value="" placeholder="Ingrese descripción">
-				<label for="">Descripción</label>
-				<input type="text" id="a-f-descripcion"  name="" class="" value="" placeholder="Ingrese descripción">
-				<button id="btn-a-f" type="button" class="btn btn-primary" onclick="return actividadFormacion(1)">AgregarAF</button>
-			</div>
-			<div id="crear-i-l" class="collapse" style="background: #FEF5E7; padding: 10px">
-				<p>Nuevo indicador de logro.</p>
-				<!--Verbos para indicador de logro -->
-				<select id="il-select-verbo">
+<div class="modal fade" id="crearcompetencia" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div style="font-family:'Courier'; width: 690px;" class="modal-dialog " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <H3 style="text-align: center; font-family:'Courier'; font-weight: bold;" class="modal-title" id="exampleModalLabel">NUEVA COMPETENCIA</H3>
+        <button style="margin-top: -30px;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Descripción:</label>
+            <textarea id="competencia-txt" type="text" class="form-control" placeholder="Ingrese descripción"></textarea>
+          </div>
+			<div id="crear-r-a" class="form-group" style="background: #E8F8F5; padding: 10px">
+				<div id="r-a-temp">
+					<H4 style="text-align: center;  font-family:'Courier'; font-weight: bold;">RESULTADOS DE APRENDIZAJE</H4>
+				</div>
+				<p style="text-align: center;">Nuevo Resultado de Aprendizaje</p>
+				<!--Verbos para resultado de aprendizaje  -->
+				<fieldset>
+				<label for="ra-select-verbo">Verbo:</label>
+				<select id="ra-select-verbo">
 					<option value="">Seleccione</option>
 					@foreach ($verbos as $verbo)
 						<option value="{{$verbo->verbo}}">{{ $verbo->verbo }}</option>
 					@endforeach
 				</select>
-				<!--Contenidos para indicador de logro -->
-				<select id="il-select-contenido">
+					</fieldset>
+				<fieldset>
+				<!--Contenidos para resultado de aprendizaje -->
+				<label for="ra-select-contenido">Contenido:</label>
+				<select id="ra-select-contenido">
 					<option value="">Seleccione</option>
 					@foreach ($contenidos as $contenido)
 						<option value="{{$contenido->contenido}}">{{ $contenido->contenido }}</option>
 					@endforeach
 				</select>
-				<!--Contextos para indicador de logro -->
-				<select id="il-select-contexto">
+					</fieldset>
+				<fieldset>
+				<!--Contextos para resultado de aprendizaje -->
+				<label for="ra-select-contexto">Contexto:</label>
+				<select id="ra-select-contexto">
 					<option value="">Seleccione</option>
 					@foreach ($contextos as $contexto)
 						<option value="{{$contexto->contexto}}">{{ $contexto->contexto }}</option>
 					@endforeach
 				</select>
-				<div id="a-e-creadas">
-					<p>Actividades de evaluación:</p>
+					</fieldset>
+				<fieldset>
+				<!--Propósitos para resultado de aprendizaje -->
+				<label for="ra-select-proposito">Propósito:</label>
+				<select id="ra-select-proposito">
+					<option value="">Seleccione</option>
+					@foreach ($propositos as $proposito)
+						<option value="{{$proposito->proposito}}">{{ $proposito->proposito }}</option>
+					@endforeach
+				</select>
+					</fieldset>
+
+				<div id="crear-a-f" class="form-group" style="background: #F4ECF7; padding: 10px">
+					<div id="a-f-temp">
+						<H5 style="text-align: center;  font-family:'Courier'; font-weight: bold;">ACTIVIDADES DE FORMACIÓN</H5>
+					</div>
+					<p style="text-align: center;">Nueva Actividad de Formación</p>
+					<fieldset>
+					<label for="">Nombre de AF </label>
+					<input type="text" id="a-f-nombre" name="" class="" value="" placeholder="Ingrese Nombre">
+						</fieldset>
+					<fieldset>
+						<label for="recipient-name" class="col-form-label">Descripción:</label>
+					<textarea type="text" id="a-f-descripcion"  name="" class="form-control" value="" placeholder="Ingrese Descripción"></textarea>
+						</fieldset>
+
+						<button style="margin-left: 40%; margin-top: 1%" id="btn-a-f" type="button" class="btn btn-warning" onclick="return actividadFormacion(1)">Agregar AF</button>
 				</div>
-				<button id="btn-crear-a-e" data-toggle="collapse" data-target="#crear-a-e">Agregar actividad de evaluación</button>
-				<div id="crear-a-e" class="collapse" style="background: #FADBD8">
-					<p>Nueva actividad de evaluación.</p>
-					<label id="" for="">Nombre</label>
-					<input type="text" id="a-e-nombre" name="" class="" value="" placeholder="Ingrese descripción">
-					<label id="" for="">Descripción</label>
-					<input type="text" id="a-e-descripcion" name="" class="" value="" placeholder="Ingrese descripción">
-					<button id="btn-a-e" type="button" class="btn btn-primary" onclick="return actividadEvaluacion()">AgregarAE</button>
+
+				<div id="crear-i-l" class="form-group" style="background: #FEF5E7; padding: 10px">
+					<div id="i-l-temp">
+						<H5 style="text-align: center;  font-family:'Courier'; font-weight: bold;">INDICADORES DE LOGRO</H5>
+					</div>
+					<p style="text-align: center;">Nuevo indicador de logro</p>
+					<fieldset>
+					<!--Verbos para indicador de logro -->
+						<label for="il-select-verbo">Verbo:</label>
+						<select id="il-select-verbo">
+						<option value="">Seleccione</option>
+						@foreach ($verbos as $verbo)
+							<option value="{{$verbo->verbo}}">{{ $verbo->verbo }}</option>
+						@endforeach
+					</select>
+						</fieldset>
+					<fieldset>
+					<!--Contenidos para indicador de logro -->
+						<label for="il-select-contenido">Contenido:</label>
+					<select id="il-select-contenido">
+						<option value="">Seleccione</option>
+						@foreach ($contenidos as $contenido)
+							<option value="{{$contenido->contenido}}">{{ $contenido->contenido }}</option>
+						@endforeach
+					</select>
+						</fieldset>
+							<fieldset>
+					<!--Contextos para indicador de logro -->
+								<label for="il-select-contexto">Contexto:</label>
+					<select id="il-select-contexto">
+						<option value="">Seleccione</option>
+						@foreach ($contextos as $contexto)
+							<option value="{{$contexto->contexto}}">{{ $contexto->contexto }}</option>
+						@endforeach
+					</select>
+								</fieldset>
+
+					<div id="crear-a-e" class="form-group" style="background: #FADBD8; padding: 10px">
+						<div id="a-e-creadas">
+							<H6 style="text-align: center;  font-family:'Courier'; font-weight: bold;">ACTIVIDADES DE EVALUACIÓN</H6>
+							<p style="text-align: center;">Nueva actividad de evaluación</p>
+						</div>
+						<p>Nueva actividad de evaluación.</p>
+						<fieldset>
+							<label for="">Nombre de AE </label>
+						<input type="text" id="a-e-nombre" name="" class="" value="" placeholder="Ingrese Nombre">
+							</fieldset>
+						<fieldset>
+							<label id="" for="">Descripción</label>
+						<textarea type="text" id="a-e-descripcion" name="" class="form-control" value="" placeholder="Ingrese descripción"></textarea>
+							</fieldset>
+							<button style="margin-left: 40%; margin-top: 1%" id="btn-a-e" type="button" class="btn btn-warning" onclick="return actividadEvaluacion()">Agregar AE</button>
+					</div>
+					<button style="margin-left: 40%; margin-top: 1%" id="btn-i-l" type="button" class="btn btn-warning" onclick="return indicadorLogro()">Agregar IL</button>
 				</div>
-				<button id="btn-i-l" type="button" class="btn btn-primary" onclick="return indicadorLogro()">AgregarIL</button>
+				<button style="margin-left: 25%; margin-top: 1%" id="btn-r-a" type="button" class="btn btn-danger" onclick="return resultadoAprendizaje()">Guardar Resultado de Aprendizaje</button>
 			</div>
-			<button id="btn-r-a" type="button" class="btn btn-primary" onclick="return resultadoAprendizaje()">AgregarRA</button>
-		</div>
-		<button id="btn-competencia" type="button" class="btn btn-primary" onclick="return competencia()">AgregarCompetencia</button>
-	</div>
+
+
+
+
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+		  <button id="btn-competencia" type="button" class="btn btn-success" onclick="return competencia()">GUARDAR COMPETENCIA</button>
+      </div>
+    </div>
+  </div>
+</div>
+		
+
 @endsection
 
 @section('scripts')
@@ -485,23 +512,33 @@
 				    div_competencias.removeChild(div_competencias.lastChild);
 				}
 
-				var titulo_h2 = document.createElement("H2");
-				titulo_h2.innerHTML = "Competencias";
-				div_competencias.appendChild(titulo_h2);
+				var titulo_h3_ = document.createElement("H5");
+				titulo_h3_.style.textAlign = "center";
+				titulo_h3_.innerHTML = "A continuación se encuentran las competencias que se espera los estudiantes hayan adquirido al finalizar el curso.";
+
+				div_competencias.appendChild(titulo_h3_);
                	
                 for(var i=0; i<array_comp.length; i++){
                 	var div_competencia = document.createElement("DIV");
                 	div_competencia.className = "competencia";
                 	var div_comp_desc = document.createElement("DIV");
                 	div_comp_desc.className = "comp_desc";
+					var p_comp_desc_ = document.createElement("H4");
+					p_comp_desc_.innerHTML = "COMPETENCIA "+parseInt(i+1);
+					p_comp_desc_.style.fontWeight = 'bold';
                 	var p_comp_desc = document.createElement("P");
-                	p_comp_desc.innerHTML = "Competencia "+parseInt(i+1)+" : "+array_comp[i]['descripcion'];
-                	div_comp_desc.appendChild(p_comp_desc);
+                	p_comp_desc.innerHTML = array_comp[i]['descripcion'];
+					div_comp_desc.appendChild(p_comp_desc_);
+					div_comp_desc.appendChild(p_comp_desc);
+					div_comp_desc.style.marginLeft = "5%";
                 	div_competencia.appendChild(div_comp_desc);
 
-                	var titulo_h3 = document.createElement("H3");
-                	titulo_h3.innerHTML = "Resultados de aprendizaje";
-                	div_competencia.appendChild(titulo_h3);
+                	var titulo_h4_ = document.createElement("H4");
+					titulo_h4_.style.textDecorationLine = "underline";
+					titulo_h4_.style.fontWeight = 'bold';
+                	titulo_h4_.innerHTML = "Resultados de aprendizaje";
+					titulo_h4_.style.marginLeft = "5%";
+                	div_competencia.appendChild(titulo_h4_);
 
                 	//Gestionar divs para los resultados de aprendizaje
                 	var div_resultados_aprendizaje = document.createElement("DIV");
@@ -510,6 +547,7 @@
                 	for(var j=0; j<res_apren_array.length; j++){
                 		var div_r_a = document.createElement("DIV");
                 		div_r_a.className = "resultado-aprendizaje";
+						div_r_a.style.marginLeft = "10%";
 
                 		var div_r_a_desc = document.createElement("DIV");
                 		div_r_a_desc.className = "r-a-descripcion";
@@ -519,6 +557,7 @@
                 		div_r_a.appendChild(div_r_a_desc);
 
                 		var titulo_h4 = document.createElement("H4");
+						titulo_h4.style.fontWeight = 'bold';
 	                	titulo_h4.innerHTML = "Actividades de formación";
 	                	div_r_a.appendChild(titulo_h4);
 
@@ -539,7 +578,9 @@
 
                 		var titulo_h4_1 = document.createElement("H4");
 	                	titulo_h4_1.innerHTML = "Indicadores de logro";
+						titulo_h4_1.style.fontWeight = 'bold';
 	                	div_r_a.appendChild(titulo_h4_1);
+
 
                 		//Gestionar elementos para indicadores de logro
             			var div_indicadores_logro = document.createElement("DIV");
@@ -548,6 +589,7 @@
                 		for(var k=0; k<indic_logro_array.length; k++){
                 			var div_indicador_logro = document.createElement("DIV");
                 			div_indicador_logro.className = "indicador-logro";
+							div_indicador_logro.style.marginLeft = "5%";
                 			var div_i_l_desc = document.createElement("DIV");
                 			div_i_l_desc.className = "i-l-descripcion";
                 			var p_i_l_desc = document.createElement("P");
@@ -558,6 +600,8 @@
                 			//Gestionar elementos para las actividades de evaluación
                 			var titulo_h5 = document.createElement("H5");
 		                	titulo_h5.innerHTML = "Actividades de evaluación";
+							titulo_h5.style.fontWeight = 'bold';
+							titulo_h5.style.fontStyle = 'Italic';
 		                	div_indicador_logro.appendChild(titulo_h5);
 
 		                	var div_actividades_evaluacion = document.createElement("DIV");
@@ -589,8 +633,9 @@
                 	var btn_borrar = document.createElement("BUTTON");
                 	btn_borrar.value = "Borrar competencia";
                 	btn_borrar.innerHTML = "Borrar competencia "+parseInt(i+1);
+					btn_borrar.style.marginLeft = "5%";
                 	btn_borrar.setAttribute( "onClick", "borrarCompetencia('"+curso_id+"', '"+competencia_id+"')");
-                	btn_borrar.className = "btn-borrar-competencia";
+                	btn_borrar.className = "btn btn-danger";
                 	div_competencia.appendChild(btn_borrar);
 
                 	//Div temporal para separar las competencias

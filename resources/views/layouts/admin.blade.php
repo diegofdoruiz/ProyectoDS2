@@ -112,34 +112,28 @@
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
           <!-- Sidebar user panel -->
-                    
+
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header"></li>
-            
+
             <li class="treeview">
               <a href="/">
                 <i class="fa fa-laptop"></i>
                 <span>HOME</span>
               </a>
             </li>
-            
+
             <li class="treeview">
-              <a href="/programa/general">
+              <a href="/programa">
                 <i class="fa fa-th"></i>
                 <span>PROGRAMAS</span>
               </a>
             </li>
             <li class="treeview">
-              <a href="/curso/general">
+              <a href="/curso">
                 <i class="fa fa-th"></i>
                 <span>CURSOS</span>
-              </a>
-            </li>
-                       
-            <li class="treeview">
-              <a href="/usuario/general">
-                <i class="fa fa-users"></i> <span>Miembros</span>
               </a>
             </li>
           </ul>
