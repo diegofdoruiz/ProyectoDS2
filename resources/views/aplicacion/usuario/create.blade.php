@@ -1,8 +1,8 @@
 @extends ('layouts.admin')
 @section ('contenido')
 	<div class="row">
-		<div class="col-lg-12 col-md-6 co-sm-6 col-xs-12">
-			<h3>Nuevo Usuario</h3>
+		<div class="col-lg-12 col-md-12 co-sm-12 col-xs-12">
+			<h1 style="font-size: 30px; font-weight: bold; text-align: center">Nuevo Usuario</h1>
 			@if (count($errors)>0)
 			<div class="alert alert-danger">
 				<ul>
@@ -89,11 +89,11 @@
 				<input type="password" name="password" class="form-control" value="{{old('password')}}" placeholder="Ej **********">
 			</div>
 		</div>
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
-				<button class="btn btn-primary" type="submit">Guardar</button>
-				<button class="btn btn-danger" type="reset">cancelar</button>
-			</div>
+	</div>
+	<div class="row">
+		<div class="form-group">
+			<button style="margin-left: 40%" class="btn btn-success" type="submit">Guardar Usuario</button>
+			<button class="btn btn-danger" type="button" onclick="history.back()">Ir Atrás</button>
 		</div>
 	</div>
 	{!! Form::close() !!}			

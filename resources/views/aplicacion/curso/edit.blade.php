@@ -2,7 +2,7 @@
 @section ('contenido')
 	<div class="row">
 		<div class="col-lg-12 col-md-6 co-sm-6 col-xs-12">
-			<h3>Editar Curso: {{ $curso->codigo }} {{$curso->nombre}}</h3>
+			<h1 style="font-size: 30px; font-weight: bold; text-align: center">Editar Curso <br> <i>{{$curso->nombre}} ({{ $curso->codigo }})</i></h1>
 			@if (count($errors)>0)
 			<div class="alert alert-danger">
 				<ul>
@@ -162,11 +162,9 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
-				<button class="btn btn-primary" type="submit">Guardar</button>
-				<button class="btn btn-danger" type="reset">cancelar</button>
-			</div>
+		<div class="form-group">
+			<button style="margin-left: 40%" id="guardar" class="btn btn-success" type="submit">Guardar Curso</button>
+			<button class="btn btn-danger" type="button" onclick="history.back()">Ir Atrás</button>
 		</div>
 	</div>
 	{!! Form::close() !!}			

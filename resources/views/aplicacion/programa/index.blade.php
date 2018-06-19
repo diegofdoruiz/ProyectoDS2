@@ -1,10 +1,12 @@
 @extends ('layouts.admin')
 @section ('contenido')
 	<div class="row">
-		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-			<h3>Listado de Programas <a href="programa/create"><button class="btn btn-success">Nuevo</button></a></h3>
-			@include('aplicacion.programa.search')
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<h1 style="font-size: 30px; font-weight: bold; text-align: center">Listado de Programas Académicos</h1>
 		</div>
+	</div>
+	<div style="margin-left: 30%; width: 40%" class="row">
+		@include('aplicacion.programa.search')
 	</div>
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -40,5 +42,9 @@
 			</div>
 			{{$programas->render()}}
 		</div>
+	</div>
+
+	<div style="margin-left: 40%" class="row">
+		<a href="programa/create"><button class="btn btn-success">Agregar Nuevo Programa</button></a>
 	</div>
 @endsection

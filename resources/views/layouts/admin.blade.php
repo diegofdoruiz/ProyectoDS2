@@ -64,7 +64,6 @@
   </head>
   <body class="hold-transition skin-red sidebar-mini">
     <div class="wrapper">
-
       <header class="main-header">
 
         <!-- Logo -->
@@ -81,9 +80,12 @@
           <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Navegación</span>
           </a>
+
+
           <!-- Navbar Right Menu -->
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+
               <!-- Messages: style can be found in dropdown.less-->
               
               <!-- User Account: style can be found in dropdown.less -->
@@ -111,11 +113,12 @@
       <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
+
           <!-- Sidebar user panel -->
 
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
-            <li class="header"></li>
+            <li class="header">MENÚ</li>
 
             <li class="treeview">
               <a href="/">
@@ -136,6 +139,7 @@
                 <span>CURSOS</span>
               </a>
             </li>
+
           </ul>
         </section>
         <!-- /.sidebar -->

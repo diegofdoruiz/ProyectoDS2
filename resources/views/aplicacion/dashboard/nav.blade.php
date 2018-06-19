@@ -8,8 +8,7 @@
 			<!-- User image -->
 			<li style="background-color: white; height: 100%; width: 100%" class="user-header">
 				@if (auth()->user()->rol==1)
-					<a class="dropdown-item" href="/curso">Administrar Cursos</a>
-					<a class="dropdown-item" href="/diseño-curso">Diseñar Curso</a>
+					<a class="dropdown-item" href="/curso">Crear/Diseñar Cursos</a>
 					<a class="dropdown-item" href="/reportes">Reportes</a>
                 @elseif(auth()->user()->rol==2 || auth()->user()->rol==3)
                         <a class="dropdown-item" href="/programa">Administrar Programas</a>
@@ -18,7 +17,7 @@
                 @else
                     <a class="dropdown-item" href="/usuario">Administrar Miembros</a>
                 @endif
-                    <a class="dropdown-item" href="/configuracion">Configuración</a>
+                    <a class="dropdown-item" href="/dashboard">Dashboard</a>
 
 			</li>
 			<!-- Menu Footer-->
