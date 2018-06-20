@@ -7,6 +7,7 @@ use proyectDs\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use proyectDs\Curso;
 use proyectDs\Programa;
+use proyectDs\Facultad;
 use proyectDs\Prerequisito;
 use proyectDs\CursoPrograma;
 use proyectDs\Competencia;
@@ -39,6 +40,10 @@ class CursoController extends Controller
                 ->orwhere([['nombre','LIKE','%'.$query.'%'], ['codigo_usuario','=',$codigo_usuario], ['estado','=','1']])
                 ->orwhere([['habilitacion', 'LIKE', '%'.$query.'%'], ['codigo_usuario','=',$codigo_usuario], ['estado','=','1']])
                 ->orwhere([['validacion', 'LIKE', '%'.$query.'%'], ['codigo_usuario','=',$codigo_usuario], ['estado','=','1']])
+                ->orwhere([['creditos', 'LIKE', '%'.$query.'%'], ['codigo_usuario','=',$codigo_usuario], ['estado','=','1']])
+                ->orwhere([['horas_magistrales', 'LIKE', '%'.$query.'%'], ['codigo_usuario','=',$codigo_usuario], ['estado','=','1']])
+                ->orwhere([['horas_independientes', 'LIKE', '%'.$query.'%'], ['codigo_usuario','=',$codigo_usuario], ['estado','=','1']])
+                ->orwhere([['num_semestre', 'LIKE', '%'.$query.'%'], ['codigo_usuario','=',$codigo_usuario], ['estado','=','1']])
                 ->orwhere([['tipo','LIKE','%'.$query.'%'], ['codigo_usuario','=',$codigo_usuario], ['estado','=','1']])
                 ->orderBy('codigo', 'desc')
                 ->paginate(7);
@@ -51,10 +56,35 @@ class CursoController extends Controller
                 ->orwhere([['curso.validacion','LIKE','%'.$query.'%'], ['curso.estado','=','1'], ['programa.director','=',$codigo_usuario]])
                 ->orwhere([['curso.habilitacion','LIKE','%'.$query.'%'], ['curso.estado','=','1'], ['programa.director','=',$codigo_usuario]])
                 ->orwhere([['curso.tipo','LIKE','%'.$query.'%'], ['curso.estado','=','1'], ['programa.director','=',$codigo_usuario]])
+
+                ->orwhere([['curso.creditos', 'LIKE', '%'.$query.'%'], ['programa.director','=',$codigo_usuario], ['curso.estado','=','1']])
+                ->orwhere([['curso.horas_magistrales', 'LIKE', '%'.$query.'%'], ['programa.director','=',$codigo_usuario], ['curso.estado','=','1']])
+                ->orwhere([['curso.horas_independientes', 'LIKE', '%'.$query.'%'], ['programa.director','=',$codigo_usuario], ['curso.estado','=','1']])
+                ->orwhere([['curso.num_semestre', 'LIKE', '%'.$query.'%'], ['programa.director','=',$codigo_usuario], ['curso.estado','=','1']])
+
                 ->addSelect('curso.codigo', 'curso.nombre', 'curso.creditos', 'curso.horas_magistrales', 'curso.horas_independientes',
                             'curso.validacion', 'curso.habilitacion', 'curso.num_semestre', 'curso.tipo', 'curso.codigo_usuario', 'curso.estado')
                 ->orderBy('curso.codigo', 'desc')
                 ->paginate(7);
+            }else if($rol == '3'){
+                $cursos = Facultad::join('escuela', 'facultad.codigo', '=', 'escuela.codigo_facultad')
+                          ->join('programa', 'escuela.codigo', '=', 'programa.codigo_escuela')
+                          ->join('cursos_programas', 'programa.codigo', '=', 'cursos_programas.codigo_programa')
+                          ->join('curso', 'cursos_programas.codigo_curso', '=', 'curso.codigo')
+                         // ->where('facultad.director', '=', $codigo_usuario)
+                ->where([['curso.codigo','=',$query], ['facultad.director','=',$codigo_usuario], ['curso.estado','=','1']])
+                ->orwhere([['curso.nombre','LIKE','%'.$query.'%'], ['facultad.director','=',$codigo_usuario], ['curso.estado','=','1']])
+                ->orwhere([['curso.habilitacion', 'LIKE', '%'.$query.'%'], ['facultad.director','=',$codigo_usuario], ['curso.estado','=','1']])
+                ->orwhere([['curso.validacion', 'LIKE', '%'.$query.'%'], ['facultad.director','=',$codigo_usuario], ['curso.estado','=','1']])
+                ->orwhere([['curso.tipo','LIKE','%'.$query.'%'], ['facultad.director','=',$codigo_usuario], ['curso.estado','=','1']])
+
+                ->orwhere([['curso.creditos', 'LIKE', '%'.$query.'%'], ['facultad.director','=',$codigo_usuario], ['curso.estado','=','1']])
+                ->orwhere([['curso.horas_magistrales', 'LIKE', '%'.$query.'%'], ['facultad.director','=',$codigo_usuario], ['curso.estado','=','1']])
+                ->orwhere([['curso.horas_independientes', 'LIKE', '%'.$query.'%'], ['facultad.director','=',$codigo_usuario], ['curso.estado','=','1']])
+                ->orwhere([['curso.num_semestre', 'LIKE', '%'.$query.'%'], ['facultad.director','=',$codigo_usuario], ['curso.estado','=','1']])
+                          ->orderBy('curso.codigo', 'desc')
+                          ->distinct('curso.codigo')
+                          ->addSelect('curso.codigo', 'curso.nombre', 'curso.creditos', 'curso.horas_magistrales', 'curso.horas_independientes', 'curso.validacion', 'curso.habilitacion', 'curso.num_semestre', 'curso.tipo')->paginate(7);
             }else if($rol== '4'){
                 $cursos=\DB::table('curso')
                 ->where([['codigo','=',$query], ['estado','=','1']])
@@ -67,7 +97,7 @@ class CursoController extends Controller
             }else{
                 return Redirect::to('dashboard');
             }
-		    return view('aplicacion.curso.index', ["cursos"=>$cursos, "searchText"=>$query]);
+		    return view('aplicacion.curso.index', ["cursos"=>$cursos, "searchText"=>$query, "rol"=>$rol]);
     	}
     }
     public function create(){
@@ -117,6 +147,7 @@ class CursoController extends Controller
 
 
     public function show($codigo){
+        $rol = auth()->user()->rol;
         $verbos = Verbo::all();
         $contenidos = Contenido::all();
         $contextos = Contexto::all();
@@ -125,7 +156,8 @@ class CursoController extends Controller
                                               "verbos"=>$verbos,
                                               "contenidos"=>$contenidos,
                                               "contextos"=>$contextos,
-                                              "propositos"=>$propositos]);
+                                              "propositos"=>$propositos,
+                                              "rol"=>$rol]);
     }
 
 
@@ -343,5 +375,172 @@ class CursoController extends Controller
 
         return response(json_encode($json_response), 200)
                ->header('Content-Type', 'application/json; charset=utf-8');
+    }
+
+    public function getCursosReportes(){
+        $user = auth()->user();
+        $rol = $user->rol;
+        $codigo = $user->codigo;
+        switch ($rol) {
+            case 1:
+                $cursos = Curso::where([['codigo_usuario','=',$codigo], ['estado','=','1']])
+                            ->orderBy('codigo', 'desc')
+                            ->addSelect('codigo', 'nombre')->get();
+                break;
+            case 2:
+                $cursos = CursoPrograma::join('programa', 'cursos_programas.codigo_programa', '=', 'programa.codigo')
+                                      ->join('curso', 'cursos_programas.codigo_curso', '=', 'curso.codigo')
+                                      ->where([['programa.director', '=', $codigo]])
+                             ->addSelect('curso.codigo', 'curso.nombre')->get();
+
+                break;
+            case 3:
+                $cursos = Facultad::join('escuela', 'facultad.codigo', '=', 'escuela.codigo_facultad')
+                          ->join('programa', 'escuela.codigo', '=', 'programa.codigo_escuela')
+                          ->join('cursos_programas', 'programa.codigo', '=', 'cursos_programas.codigo_programa')
+                          ->join('curso', 'cursos_programas.codigo_curso', '=', 'curso.codigo')
+                          ->where('facultad.director', '=', $codigo)
+                          ->orderBy('curso.codigo', 'desc')
+                          ->distinct('curso.codigo')
+                          ->addSelect('curso.codigo', 'curso.nombre')->get();
+
+                break;
+            case 4:
+                $cursos=Curso::where('estado', '=', '1')
+                           ->orderBy('codigo', 'desc')
+                           ->addSelect('codigo', 'nombre')->get();
+                break;
+            default:
+                # code...
+                break;
+        }
+
+        $json_cursos_response = array("cursos" => $cursos); 
+        return response(json_encode($json_cursos_response), 200)
+               ->header('Content-Type', 'application/json; charset=utf-8');
+    }
+
+    public function getProgramasReportes(){
+        $user = auth()->user();
+        $rol = $user->rol;
+        $codigo = $user->codigo;
+        switch ($rol) {
+            case 2:
+                $programas = Programa::join('usuario', 'programa.director', '=', 'usuario.codigo')
+                                      ->where([['usuario.codigo', '=', $codigo], ['programa.estado', '=', '1']])
+                                  ->addSelect('programa.codigo', 'programa.nombre')->get();
+
+                break;
+            case 3:
+                $programas = Facultad::join('escuela', 'facultad.codigo', '=', 'escuela.codigo_facultad')
+                                     ->join('programa', 'escuela.codigo', '=', 'programa.codigo_escuela')
+                                     ->where([['facultad.director', '=', $codigo], ['programa.estado', '=', '1']])
+                                     ->orderBy('programa.codigo', 'desc')
+                                     ->distinct('programa.codigo')
+                                     ->addSelect('programa.codigo', 'programa.nombre')->get();
+
+                break;
+            case 4:
+                $programas=Programa::where([['estado', '=', '1']])
+                           ->orderBy('codigo', 'desc')
+                           ->distinct('codigo')
+                           ->addSelect('codigo', 'nombre')->get();
+                break;
+            default:
+                # code...
+                break;
+        }
+
+        $json_programas_response = array("programas" => $programas); 
+        return response(json_encode($json_programas_response), 200)
+               ->header('Content-Type', 'application/json; charset=utf-8');
+    }
+
+    public function crearReportes(){
+        $usuario = auth()->user();
+        return view('aplicacion.curso.report', ["usuario" => $usuario]);
+    }
+
+    public function getDataReportes(Request $request){
+        $reporte = $request->get('reporte');
+        $json_response;
+        switch ($reporte) {
+            case 1:
+                $codigo_curso = $request->get('codigo_curso');
+                $json_response = self::reporte1($codigo_curso);
+                break;
+            case 2:
+                $codigo_programa = $request->get('codigo_programa');
+                $json_response = self::reporte2($codigo_programa);
+                break;
+            case 3:
+                $codigo_curso = $request->get('codigo_curso');
+                $json_response = self::reporte1($codigo_curso);
+                break;
+            default:
+                break;
+        }
+        return response(json_encode($json_response), 200)
+               ->header('Content-Type', 'application/json; charset=utf-8');
+    }
+
+
+    public function reporte1($codigo_curso){
+        $competencias = Competencia::where('codigo_curso', '=', $codigo_curso)->orderBy('codigo', 'asc')->get();
+        $curso=Curso::findOrFail($codigo_curso);
+        $competencias_array = [];
+        foreach ($competencias as $competencia) {
+            $codigo_comp = $competencia->codigo;
+            $descrip_comp = $competencia->descripcion;
+            $res_aprendizaje = ResultadoAprendizaje::where('codigo_competencia', '=', $codigo_comp)->orderBy('codigo', 'asc')->get();
+            $res_aprendizaje_array = [];  
+            foreach ($res_aprendizaje as $r_a_s){
+                $r_a_codigo = $r_a_s->codigo;
+                $r_a_descripcion = $r_a_s->descripcion;
+                $r_a_activ_form = ActividadFormacion::where('codigo_res_aprendizaje', '=', $r_a_codigo)->orderBy('codigo', 'asc')->get();
+                $r_a_indis_logro = IndicadorLogro::where('codigo_res_aprendizaje', '=', $r_a_codigo)->orderBy('codigo', 'asc')->get();
+                $actis_form_array = [];
+                foreach ($r_a_activ_form as $a_f_s) {
+                    $a_f_name = $a_f_s->nombre;
+                    $a_f_descripcion = $a_f_s->descripcion;
+                    $a_f_array = array("name"=>$a_f_name, "descripcion"=>$a_f_descripcion);
+                    array_push($actis_form_array, $a_f_array);
+                }
+                $indis_logro_array = [];
+                foreach ($r_a_indis_logro as $i_l_s) {
+                    $i_l_codigo = $i_l_s->codigo;
+                    $i_l_descripcion = $i_l_s->descripcion;
+                    $i_l_actis_eval = ActividadEvaluacion::where('codigo_indicador_logro', '=', $i_l_codigo)->orderBy('codigo', 'asc')->get();
+
+                    $actis_eval_array = [];
+                    foreach ($i_l_actis_eval as $a_e_s) {
+                        $a_e_name = $a_e_s->nombre;
+                        $a_e_descripcion = $a_e_s->descripcion;
+                        $a_e_array = array("name"=>$a_e_name, "descripcion"=>$a_e_descripcion);
+                        array_push($actis_eval_array, $a_e_array);
+                    }
+                    $i_l_array = array("descripcion" => $i_l_descripcion, "actividades_evaluacion" => $actis_eval_array);
+                    array_push($indis_logro_array, $i_l_array);
+                }
+
+                $r_a_array = array("descripcion" => $r_a_descripcion, "actividades_formacion" => $actis_form_array, "indicadores_logro" => $indis_logro_array);
+                array_push($res_aprendizaje_array, $r_a_array);
+            }
+            $competencia_array = array("codigo_competencia" => $codigo_comp, "descripcion" => $descrip_comp, "resultados_aprendizaje" => $res_aprendizaje_array);
+            array_push($competencias_array, $competencia_array);
+        }
+        $json_response = array("competencias" => $competencias_array, "curso" => $curso);
+        return $json_response;
+    }
+
+    public function reporte2($codigo_programa){
+        $programa=Programa::findOrFail($codigo_programa);
+        $competencias = CursoPrograma::join('curso', 'cursos_programas.codigo_curso', '=', 'curso.codigo')
+                                       ->join('competencias', 'curso.codigo', '=', 'competencias.codigo_curso')
+                                       ->where([['cursos_programas.codigo_programa', '=', $codigo_programa]])
+                                       ->orderBy('curso.num_semestre', 'asc')
+                                       ->addSelect('curso.codigo', 'curso.nombre', 'curso.num_semestre', 'competencias.descripcion')
+                                       ->get();
+        return array("competencias" => $competencias, "programa" => $programa);
     }
 }

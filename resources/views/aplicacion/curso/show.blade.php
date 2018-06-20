@@ -7,8 +7,9 @@
 	<div id="competencias">
 		<H5 style="text-align: center;">A continuación se encuentran las competencias que se espera los estudiantes hayan adquirido al finalizar el curso.</H5>
 	</div>
-
-<button style="margin-left: 40%; margin-top: 1%; margin-bottom: 2%" id="btn-crear-competencia" type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearcompetencia" data-whatever="Nueva Competencia">NUEVA COMPETENCIA</button>
+@if($rol != 3 && $rol != 2)
+     <button style="margin-left: 40%; margin-top: 1%; margin-bottom: 2%" id="btn-crear-competencia" type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearcompetencia" data-whatever="Nueva Competencia">NUEVA COMPETENCIA</button>
+@endif
 
 <div class="modal fade" id="crearcompetencia" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div style="font-family:'Courier'; width: 690px;" class="modal-dialog " role="document">
@@ -144,12 +145,6 @@
 				</div>
 				<button style="margin-left: 25%; margin-top: 1%" id="btn-r-a" type="button" class="btn btn-danger" onclick="return resultadoAprendizaje()">Guardar Resultado de Aprendizaje</button>
 			</div>
-
-
-
-
-
-
         </form>
       </div>
       <div class="modal-footer">
@@ -627,16 +622,24 @@
                 	}//fin for resultados aprendizaje
                 	div_competencia.appendChild(div_resultados_aprendizaje);
 
-                	//boton para borrar competencia 
-                	var curso_id = document.getElementById("curso-id").value;
-                	var competencia_id = array_comp[i]['codigo_competencia'];
-                	var btn_borrar = document.createElement("BUTTON");
-                	btn_borrar.value = "Borrar competencia";
-                	btn_borrar.innerHTML = "Borrar competencia "+parseInt(i+1);
-					btn_borrar.style.marginLeft = "5%";
-                	btn_borrar.setAttribute( "onClick", "borrarCompetencia('"+curso_id+"', '"+competencia_id+"')");
-                	btn_borrar.className = "btn btn-danger";
-                	div_competencia.appendChild(btn_borrar);
+                	@if($rol != 3 && $rol != 2)
+	                	//boton para borrar competencia 
+	                	var curso_id = document.getElementById("curso-id").value;
+	                	var competencia_id = array_comp[i]['codigo_competencia'];
+	                	var btn_borrar = document.createElement("BUTTON");
+	                	btn_borrar.value = "Borrar competencia";
+	                	btn_borrar.innerHTML = "Borrar competencia "+parseInt(i+1);
+						btn_borrar.style.marginLeft = "5%";
+	                	btn_borrar.setAttribute( "onClick", "borrarCompetencia('"+curso_id+"', '"+competencia_id+"')");
+	                	btn_borrar.className = "btn btn-danger";
+	                	div_competencia.appendChild(btn_borrar);
+	                @else
+	                	var div_separator = document.createElement("DIV");
+	                	var ffff = document.createElement("P");
+	                	ffff.innerHTML ="</br>"
+	                	div_separator.appendChild(ffff);
+	                	div_competencia.appendChild(div_separator);
+                	@endif
 
                 	//Div temporal para separar las competencias
                 	

@@ -24,7 +24,9 @@
 					    <th style="width:30px;">Semestre</th>
 					    <th style="width:30px;">Tipo</th>
 					    <!--<th>Estado</th>-->
-					    <th>Opciones</th>
+					    @if($rol != 3)
+					    	<th>Opciones</th>
+				    	@endif
 					</thead>
 					@foreach ($cursos as $curso)
 					<tr>
@@ -38,12 +40,14 @@
 						<td> {{ $curso->num_semestre }} </td>
 						<td> {{ $curso->tipo }} </td>
 						<!--<td>{{ $curso->estado }}</td>-->
-						<td>
-							<div class="btn-group btn-group-sm" role="group" aria-label="buttons">
-								<a href="{{ URL::action('CursoController@edit', $curso->codigo) }}"><button type="button" class="btn btn-info">Editar</button></a>
-								<a href="" data-target="#modal-delete-{{$curso->codigo}}" data-toggle="modal"><button type="button" class="btn btn-danger">Eliminar</button></a>
-							</div>
-						</td>
+						@if($rol != 3)
+					    	<td>
+								<div class="btn-group btn-group-sm" role="group" aria-label="buttons">
+									<a href="{{ URL::action('CursoController@edit', $curso->codigo) }}"><button type="button" class="btn btn-info">Editar</button></a>
+									<a href="" data-target="#modal-delete-{{$curso->codigo}}" data-toggle="modal"><button type="button" class="btn btn-danger">Eliminar</button></a>
+								</div>
+							</td>
+				    	@endif
 					</tr>
 					@include('aplicacion.curso.modal')
 					@endforeach
@@ -52,8 +56,9 @@
 			{{$cursos->render()}}
 		</div>
 	</div>
-
-	<div style="margin-left: 42%" class="row">
-		<a href="curso/create"><button class="btn btn-success">Agregar Nuevo Curso</button></a>
-	</div>
+	@if($rol != 3)
+		<div style="margin-left: 42%" class="row">
+			<a href="curso/create"><button class="btn btn-success">Agregar Nuevo Curso</button></a>
+		</div>
+	@endif
 @endsection

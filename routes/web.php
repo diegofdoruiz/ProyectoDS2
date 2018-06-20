@@ -31,5 +31,10 @@ Route::get('prerequisitos', 'CursoController@getPrerequisitos');
 Route::get('crear_competencia', 'CursoController@crearCompetencia');
 Route::get('eliminar_competencia', 'CursoController@eliminarCompetencia');
 Route::get('get_competencias', 'CursoController@getCompetencias');
+Route::get('reportes', 'CursoController@crearReportes');
+Route::get('reportes/cursos', 'CursoController@getCursosReportes');
+Route::get('reportes/programas', 'CursoController@getProgramasReportes');
+Route::get('reportes/get_data', 'CursoController@getDataReportes');
+
 
 
