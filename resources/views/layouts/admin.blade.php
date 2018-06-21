@@ -127,6 +127,7 @@
                 <span>HOME</span>
               </a>
             </li>
+            @if(@auth()->user()!=NULL)
             @if(auth()->user()->rol != 1)
             <li class="treeview">
               <a href="/programa">
@@ -134,6 +135,7 @@
                 <span>PROGRAMAS</span>
               </a>
             </li>
+            @endif
             @endif
             <li class="treeview">
               <a href="/curso">
@@ -147,6 +149,7 @@
                 <span>REPORTES</span>
               </a>
             </li>
+            @if(@auth()->user()!=NULL)
             @if(auth()->user()->rol == 4)
               <li class="treeview">
                 <a href="/usuario">
@@ -154,6 +157,7 @@
                   <span>USUARIOS</span>
                 </a>
               </li>
+            @endif
             @endif
           </ul>
         </section>
