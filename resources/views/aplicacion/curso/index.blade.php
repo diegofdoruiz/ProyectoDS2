@@ -3,7 +3,7 @@
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<h1 style="font-size: 30px; font-weight: bold; text-align: center">Listado de Cursos</h1>
-			<H5 style="text-align: center;"><u>Nota:</u> Haga click sobre el nombre de un curso si desea diseñar sus competencias.</H5>
+			<H5 style="text-align: center;"><u>Nota:</u> Haga click sobre el nombre de un curso si desea visualizar sus competencias.</H5>
 		</div>
 	</div>
 	<div style="margin-left: 30%; width: 40%" class="row">

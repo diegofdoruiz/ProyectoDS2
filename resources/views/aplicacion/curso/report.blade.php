@@ -3,14 +3,14 @@
 <!-- Web content -->
 @section ('contenido')
 	<div id="report-content">
-		<H1 style="font-size: 30px; font-weight: bold;">Crear un reporte</H1>
-
-		<div id="div-set-report">
+		<H1 style="font-size: 30px; font-weight: bold; text-align: center">Consulta de Reportes</H1>
+		<H5 style="text-align: center;">A continuación seleccione el tipo de reporte que desea visualizar:</H5>
+		<div style="margin-top: 1%;" id="div-set-report">
 			<input type="hidden" id="data-user-report" value="{{$usuario->rol}}-{{$usuario->codigo}}">
 			
-			<div id="div-select-report">
-				<label for="select-report" class="">Seleccione un tipo de reporte:  </label>
-				<select id="select-report">
+			<div style="margin-left: 40%" id="div-select-report">
+				<label for="select-report" class="">Tipo de Reporte:  </label>
+				<select style="margin-left: 2px" id="select-report">
 					<option>Seleccione</option>
 					<option>Reporte 1</option>
 					@if($usuario->rol != 1)
@@ -20,21 +20,25 @@
 				</select>
 			</div>
 
-			<div id="div-cursos-report" style="display: none;">
+			<H5 style="text-align: left;  margin-bottom: 2%"><strong>Reporte 1:</strong> Si desea ver el diseño completo de un curso en forma de tabla. <br>
+				<strong>Reporte 2:</strong> Si desea ver las competencias trabajadas en un programa académico por semestre en forma de tabla. <br>
+				<strong>Reporte 3:</strong> Si desea ver un reporte visual de la jerarquía de competencias de un curso con sus respectivos resultados de aprendizaje e indicadores de logro.<br>
+			</H5>
+
+			<div id="div-cursos-report" style="display: none; margin-left: 30%; margin-bottom: 1%">
 				<label for="select-cursos" class="">Seleccione un curso:</label>
-				<select id="select-cursos">
+				<select style="margin-left: 2px" id="select-cursos">
 				</select>
 			</div>
 
-			<div id="div-programas-report" style="display: none;">
+			<div id="div-programas-report" style="display: none; margin-left: 30%;">
 				<label for="select-programas" class="">Seleccione un programa:</label>
-				<select id="select-programas">
+				<select style="margin-left: 2px" id="select-programas">
 				</select>
 			</div>
-
-			<div id="div-semestres-report" style="display: none;">
+			<div id="div-semestres-report" style="display: none; margin-left: 35%; margin-bottom: 1%">
 				<label for="select-semestres" class="">Seleccione un semestre:</label>
-				<select id="select-semestres">
+				<select style="margin-left: 2px" id="select-semestres">
 					<option value="0">Todos</option>
 					@for($i=1; $i<=10; $i++)
 						<option value="{{ $i }}">{{$i}}</option>
@@ -42,10 +46,11 @@
 				</select>
 			</div>
 
-			<button id="btn-report" type="button" class="btn btn-info" onclick="return getData()">Generar reporte</button>
+			<button style="margin-left: 43%; margin-bottom: 1%" id="btn-report" type="button" class="btn btn-danger" onclick="return getData()">Generar Reporte</button>
+
 		</div>
 		<div id="show-report">
-			<div id="div-report1" style="display: none">
+			<div id="div-report1" style="display: none;">
 				<div id="div-header-report1">
 					
 				</div>
@@ -61,9 +66,9 @@
 						</tbody>
 					</table>	
 				</div>
-				<a onclick="javascript:window.imprimirReporte('div-report1');">Imprimir</a>
+				<button style="font-size:15px; margin-left: 42%; margin-bottom: 1%" type="button" class="btn btn-info" onclick="javascript:window.imprimirReporte('div-report1');">Imprimir <i class="fa fa-print"></i></button>
 			</div>
-			<div id="div-report2" style="display: none">
+			<div id="div-report2" style="display: none;">
 				<div id="div-header-report2">
 					
 				</div>
@@ -79,16 +84,16 @@
 						</tbody>
 					</table>
 				</div>
-				<a onclick="javascript:window.imprimirReporte('div-report2');">Imprimir</a>
+				<button style="font-size:15px; margin-left: 42%; margin-bottom: 1%" type="button" class="btn btn-success" onclick="javascript:window.imprimirReporte('div-report2');">Imprimir <i class="fa fa-print"></i></button>
 			</div>
-			<div id="div-report3" style="display: none">
+			<div id="div-report3" style="display: none;">
 				<div id="div-header-report3">
 					
 				</div>
 				<div id="competencias">
 					<H5 style="text-align: center;">A continuación se encuentran las competencias que se espera los estudiantes hayan adquirido al finalizar el curso.</H5>
 				</div>
-				<a onclick="javascript:window.imprimirReporte('div-report3');">Imprimir</a>	
+				<button style="font-size:15px; margin-left: 42%; margin-bottom: 1%" type="button" class="btn btn-warning" onclick="javascript:window.imprimirReporte('div-report3');">Imprimir <i class="fa fa-print"></i></button>
 			</div>	
 		</div>
 	</div>
@@ -133,7 +138,7 @@
                 var response_array = JSON.parse(response);
                 var array_cursos = response_array['cursos'];
                 var div_cursos_report = document.getElementById("div-cursos-report");
-                div_cursos_report.style.display="inline-block";
+                div_cursos_report.style.display="table";
                 var select_cursos = document.getElementById("select-cursos");
                 var option = document.createElement("OPTION");
             	option.className = "option-curso-reporte";
@@ -160,9 +165,9 @@
                 var response_array = JSON.parse(response);
                 var array_cursos = response_array['programas'];
                 var div_programas_report = document.getElementById("div-programas-report");
-            	div_programas_report.style.display="inline-block";
+            	div_programas_report.style.display="table";
             	var div_semestres_report = document.getElementById("div-semestres-report");
-	            div_semestres_report.style.display="inline-block";
+	            div_semestres_report.style.display="table";
 	            document.getElementById('select-semestres').selectedIndex = 0;
                 var select_programas = document.getElementById("select-programas");
                 var option = document.createElement("OPTION");
@@ -264,23 +269,21 @@
         while (header_report1.firstChild) {
 		    header_report1.removeChild(header_report1.firstChild);
 		}
-		var h3 = document.createElement("H3");
-        h3.innerHTML = "</br></br>*************** Reporte 1 de un curso *******************";
-        header_report1.appendChild(h3);
 		var curso = data['curso'];
-        var curso_codigo = document.createElement("P");
-        curso_codigo.innerHTML = "Código del curso "+curso['codigo'];
-        header_report1.appendChild(curso_codigo);
-
-        var nombre_curso = document.createElement("P");
-        nombre_curso.innerHTML = "Nombre del curso "+curso['nombre']+"</br></br>*************************";
-        header_report1.appendChild(nombre_curso);
+		var h4 = document.createElement("H4");
+		h4.innerHTML = "<u><strong>Reporte 1: Diseño Completo del Curso</strong></u>";
+		header_report1.appendChild(h4);
+		var h3 = document.createElement("H3");
+        h3.innerHTML = "<strong>"+ curso['nombre']+" <i>("+curso['codigo']+")</i><strong>";
+		h3.style.textAlign = 'center';
+		header_report1.appendChild(h3);
 
         /*** Estructura del cuerpo del reporte***/
         var cuerpo_tabla = document.getElementById("body-table-report1");
         while (cuerpo_tabla.firstChild) {
 		    cuerpo_tabla.removeChild(cuerpo_tabla.firstChild);
 		}
+
         var array_comp = data['competencias'];
         for(var i=0; i<array_comp.length; i++){
         	var body_table_report1 = document.getElementById("body-table-report1");
@@ -290,6 +293,7 @@
 			td_competencia.innerHTML = array_comp[i]['descripcion'];
 			td_competencia.style.fontWeight="bold";
 			fila_tabla.appendChild(td_competencia);
+			fila_tabla.style.background = '#BAE4FF';
         	for(var j=0; j<res_apren_array.length; j++){
         		
         		if(j != 0){
@@ -297,6 +301,7 @@
 
         			td_competencia = document.createElement("TD");
     				fila_tabla.appendChild(td_competencia);
+					fila_tabla.style.background = '#CEECFF';
         		}
 
         		var td_ra = document.createElement("TD");
@@ -309,6 +314,7 @@
 				titulo_h6.style.fontWeight = 'bold';
             	titulo_h6.innerHTML = "Actividades de formación";
             	div_af_ra.appendChild(titulo_h6);
+
         		var a_f_list = document.createElement("UL");
         		var acti_form_array =  res_apren_array[j]['actividades_formacion'];
         		for(var k=0; k<acti_form_array.length; k++){
@@ -318,8 +324,7 @@
         		}//fin for actividades formación
         		div_af_ra.appendChild(a_f_list);
         		td_ra.appendChild(div_af_ra);
-
-    			fila_tabla.appendChild(td_ra);
+				fila_tabla.appendChild(td_ra);
 
     			var indic_logro_array =  res_apren_array[j]['indicadores_logro'];
     			for(var k=0; k<indic_logro_array.length; k++){
@@ -351,9 +356,10 @@
 	        		}//fin for actividades formación
 	        		div_ae_il.appendChild(a_e_list);
 	        		td_il.appendChild(div_ae_il);
-
         			fila_tabla.appendChild(td_il);
         			body_table_report1.appendChild(fila_tabla);
+					body_table_report1.style.background = '#DAF1FF';
+
         		}//Fin for indicadores logro
         	}//Fin for resultados aprendizaje
 		}//end for competencias
@@ -369,17 +375,14 @@
         while (header_report2.firstChild) {
 		    header_report2.removeChild(header_report2.firstChild);
 		}
-		var h3 = document.createElement("H3");
-        h3.innerHTML = "</br></br>*************** Reporte 2 de un programa *******************";
-        header_report2.appendChild(h3);
 		var programa = data['programa'];
-        var codigo_programa = document.createElement("P");
-        codigo_programa.innerHTML = "Código del programa "+programa['codigo'];
-        header_report2.appendChild(codigo_programa);
-
-        var nombre_programa = document.createElement("P");
-        nombre_programa.innerHTML = "Nombre del programa "+programa['nombre']+"</br></br>*************************";
-        header_report2.appendChild(nombre_programa);
+		var h4 = document.createElement("H4");
+		h4.innerHTML = "<u><strong>Reporte 2: Competencias en un Programa Académico</strong></u>";
+		header_report2.appendChild(h4);
+		var h3 = document.createElement("H3");
+		h3.innerHTML = "<strong>"+ programa['nombre']+" <i>("+programa['codigo']+")</i><strong>";
+		h3.style.textAlign = 'center';
+		header_report2.appendChild(h3);
 
 		/***********Cuerpo del reporte 2 ****************/
 		var cuerpo_tabla = document.getElementById("body-table-report2");
@@ -389,6 +392,7 @@
 		var array_comp = data['competencias'];
 		var semestre_actual = 0;
 		var fila_tabla = document.createElement("TR");
+		fila_tabla.style.background ='#D4FFDA';
 		for(var i=0; i<array_comp.length; i++){
 			if(array_comp[i]['num_semestre'] > semestre_actual){
 				fila_tabla = document.createElement("TR");
@@ -399,18 +403,21 @@
 				td_competencia2.innerHTML = semestre_actual;
 				fila_tabla.appendChild(td_competencia1);
 				fila_tabla.appendChild(td_competencia2);
+				fila_tabla.style.background ='#D4FFDA';
 			}else{
 				fila_tabla = document.createElement("TR");
 				var td_competencia1 = document.createElement("TD");
 				var td_competencia2 = document.createElement("TD");
 				fila_tabla.appendChild(td_competencia1);
 				fila_tabla.appendChild(td_competencia2);
+				fila_tabla.style.background ='#DFFFE4';
 			}
 			var td_competencia3 = document.createElement("TD");
 			td_competencia3.innerHTML = array_comp[i]['descripcion'];
 			fila_tabla.appendChild(td_competencia3);
 			var body_table_report2 = document.getElementById("body-table-report2");
 			body_table_report2.appendChild(fila_tabla);
+			body_table_report2.style.background ='#DFFFE4';
 		}
 	}
 
@@ -424,20 +431,18 @@
         while (header_report3.firstChild) {
 		    header_report3.removeChild(header_report3.firstChild);
 		}
-		var h3 = document.createElement("H3");
-        h3.innerHTML = "</br></br>*************** Reporte 3 de un curso *******************";
-        header_report3.appendChild(h3);
 		var curso = data['curso'];
-        var curso_codigo = document.createElement("P");
-        curso_codigo.innerHTML = "Código del curso "+curso['codigo'];
-        header_report3.appendChild(curso_codigo);
-
-        var nombre_curso = document.createElement("P");
-        nombre_curso.innerHTML = "Nombre del curso "+curso['nombre']+"</br></br>*************************";
-        header_report3.appendChild(nombre_curso);
+		var h4 = document.createElement("H4");
+		h4.innerHTML = "<u><strong>Reporte 3: Jerarquía de Competencias de un Curso</strong></u>";
+		header_report3.appendChild(h4);
+		var h3 = document.createElement("H3");
+		h3.innerHTML = "<strong>"+ curso['nombre']+" <i>("+curso['codigo']+")</i><strong>";
+		h3.style.textAlign = 'center';
+        header_report3.appendChild(h3);
 
         /***Cuerpo del reporte***/
         var div_competencias = document.getElementById("competencias");
+		div_competencias.style.background = '#FFF0BA';
         while (div_competencias.hasChildNodes()) {
 		    div_competencias.removeChild(div_competencias.lastChild);
 		}
@@ -455,6 +460,7 @@
 			div_comp_desc.appendChild(p_comp_desc_);
 			div_comp_desc.appendChild(p_comp_desc);
 			div_comp_desc.style.marginLeft = "5%";
+			div_comp_desc.style.background = '#FFF0BA';
         	div_competencia.appendChild(div_comp_desc);
 
         	var titulo_h4_ = document.createElement("H4");
@@ -464,6 +470,7 @@
 			titulo_h4_.style.marginLeft = "5%";
         	div_competencia.appendChild(titulo_h4_);
 
+
         	//Gestionar divs para los resultados de aprendizaje
         	var div_resultados_aprendizaje = document.createElement("DIV");
         	div_resultados_aprendizaje.className = "resultados-aprendizaje";
@@ -472,18 +479,19 @@
         		var div_r_a = document.createElement("DIV");
         		div_r_a.className = "resultado-aprendizaje";
 				div_r_a.style.marginLeft = "10%";
+				div_r_a.style.marginRight = "1%";
 
         		var div_r_a_desc = document.createElement("DIV");
         		div_r_a_desc.className = "r-a-descripcion";
         		var p_r_a_desc = document.createElement("P");
         		p_r_a_desc.innerHTML = "RA "+parseInt(i+1)+"."+parseInt(j+1)+" : "+res_apren_array[j]['descripcion']; 
         		div_r_a_desc.appendChild(p_r_a_desc);
-        		div_r_a.appendChild(div_r_a_desc);
-
+				div_r_a.appendChild(div_r_a_desc);
         		var titulo_h4 = document.createElement("H4");
 				titulo_h4.style.fontWeight = 'bold';
             	titulo_h4.innerHTML = "Actividades de formación";
             	div_r_a.appendChild(titulo_h4);
+
 
         		//Gestionar elementos para actividades de formación
         		var div_actividades_formacion = document.createElement("DIV");
