@@ -470,8 +470,9 @@ class CursoController extends Controller
                 $json_response = self::reporte1($codigo_curso);
                 break;
             case 2:
+                $semestre = $request->get('semestre');
                 $codigo_programa = $request->get('codigo_programa');
-                $json_response = self::reporte2($codigo_programa);
+                $json_response = self::reporte2($codigo_programa, $semestre);
                 break;
             case 3:
                 $codigo_curso = $request->get('codigo_curso');
@@ -533,14 +534,25 @@ class CursoController extends Controller
         return $json_response;
     }
 
-    public function reporte2($codigo_programa){
+    public function reporte2($codigo_programa, $semestre){
         $programa=Programa::findOrFail($codigo_programa);
-        $competencias = CursoPrograma::join('curso', 'cursos_programas.codigo_curso', '=', 'curso.codigo')
+        if($semestre == 0){
+            $competencias = CursoPrograma::join('curso', 'cursos_programas.codigo_curso', '=', 'curso.codigo')
                                        ->join('competencias', 'curso.codigo', '=', 'competencias.codigo_curso')
                                        ->where([['cursos_programas.codigo_programa', '=', $codigo_programa]])
                                        ->orderBy('curso.num_semestre', 'asc')
                                        ->addSelect('curso.codigo', 'curso.nombre', 'curso.num_semestre', 'competencias.descripcion')
                                        ->get();
+        }else{
+            $competencias = CursoPrograma::join('curso', 'cursos_programas.codigo_curso', '=', 'curso.codigo')
+                                       ->join('competencias', 'curso.codigo', '=', 'competencias.codigo_curso')
+        ->where([['cursos_programas.codigo_programa', '=', $codigo_programa], ['curso.num_semestre', '=', $semestre]])
+                                       ->orderBy('curso.num_semestre', 'asc')
+                                       ->addSelect('curso.codigo', 'curso.nombre', 'curso.num_semestre', 'competencias.descripcion')
+                                       ->get();
+
+        }
+        
         return array("competencias" => $competencias, "programa" => $programa);
     }
 }

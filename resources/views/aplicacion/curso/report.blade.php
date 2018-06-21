@@ -32,6 +32,16 @@
 				</select>
 			</div>
 
+			<div id="div-semestres-report" style="display: none;">
+				<label for="select-semestres" class="">Seleccione un semestre:</label>
+				<select id="select-semestres">
+					<option value="0">Todos</option>
+					@for($i=1; $i<=10; $i++)
+						<option value="{{ $i }}">{{$i}}</option>
+					@endfor
+				</select>
+			</div>
+
 			<button id="btn-report" type="button" class="btn btn-info" onclick="return getData()">Generar reporte</button>
 		</div>
 		<div id="show-report">
@@ -102,6 +112,8 @@
 			if(index_report == 1 || index_report == 3){
 				var div_programas_report = document.getElementById("div-programas-report");
 	            div_programas_report.style.display="none";
+	            var div_semestres_report = document.getElementById("div-semestres-report");
+	            div_semestres_report.style.display="none";
 	            $('#select-cursos').empty();
 				configurarCursos();
 			}else if(index_report == 2){
@@ -149,6 +161,9 @@
                 var array_cursos = response_array['programas'];
                 var div_programas_report = document.getElementById("div-programas-report");
             	div_programas_report.style.display="inline-block";
+            	var div_semestres_report = document.getElementById("div-semestres-report");
+	            div_semestres_report.style.display="inline-block";
+	            document.getElementById('select-semestres').selectedIndex = 0;
                 var select_programas = document.getElementById("select-programas");
                 var option = document.createElement("OPTION");
             	option.className = "option-programa-reporte";
@@ -195,7 +210,8 @@
 				}
 				var selec_programa = document.getElementById("select-programas");
 				var codigo_programa = selec_programa.options[selec_programa.selectedIndex].text.split(" - ")[0];
-				parametros = "?reporte=2&codigo_programa="+codigo_programa;
+				var selec_semestre = document.getElementById("select-semestres").selectedIndex;
+				parametros = "?reporte=2&codigo_programa="+codigo_programa+"&semestre="+selec_semestre;
 				break;
 			case 3:
 				if(document.getElementById("select-cursos").options.length < 1)
