@@ -122,25 +122,39 @@
             <li class="header">MENÚ</li>
 
             <li class="treeview">
-              <a href="/">
+              <a href="/dashboard">
                 <i class="fa fa-laptop"></i>
                 <span>HOME</span>
               </a>
             </li>
-
+            @if(auth()->user()->rol != 1)
             <li class="treeview">
               <a href="/programa">
                 <i class="fa fa-th"></i>
                 <span>PROGRAMAS</span>
               </a>
             </li>
+            @endif
             <li class="treeview">
               <a href="/curso">
                 <i class="fa fa-th"></i>
                 <span>CURSOS</span>
               </a>
             </li>
-
+            <li class="treeview">
+              <a href="/reportes">
+                <i class="fa fa-th"></i>
+                <span>REPORTES</span>
+              </a>
+            </li>
+            @if(auth()->user()->rol == 4)
+              <li class="treeview">
+                <a href="/usuario">
+                  <i class="fa fa-th"></i>
+                  <span>USUARIOS</span>
+                </a>
+              </li>
+            @endif
           </ul>
         </section>
         <!-- /.sidebar -->

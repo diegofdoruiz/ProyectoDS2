@@ -8,6 +8,22 @@
 			<div  class="panel-body">
 				<strong>Email: {{ auth()->user()->email }} </strong>
 			</div>
+			@if(auth()->user()->rol != 1)
+			<div  class="panel-body">
+				<a href="/programa" class="btn btn-primary btn-block" role="button">Programas</a>
+			</div>
+			@endif
+			<div  class="panel-body">
+				<a href="/curso" class="btn btn-primary btn-block" role="button">Cursos</a>
+			</div>
+			<div  class="panel-body">
+				<a href="/reportes" class="btn btn-primary btn-block" role="button">Reportes</a>
+			</div>
+			@if(auth()->user()->rol == 4)
+			<div  class="panel-body">
+				<a href="/usuario" class="btn btn-primary btn-block" role="button">Usuarios</a>
+			</div>
+			@endif
 			<div class="panel-footer">
 				<form method="POST" action="{{ route('logout') }}">
 					{{ csrf_field() }}

@@ -7,17 +7,15 @@
 		<ul class="dropdown-menu">
 			<!-- User image -->
 			<li style="background-color: white; height: 100%; width: 100%" class="user-header">
-				@if (auth()->user()->rol==1)
-					<a class="dropdown-item" href="/curso">Crear/Diseñar Cursos</a>
-					<a class="dropdown-item" href="/reportes">Reportes</a>
-                @elseif(auth()->user()->rol==2 || auth()->user()->rol==3)
-                        <a class="dropdown-item" href="/programa">Administrar Programas</a>
-                        <a class="dropdown-item" href="/curso">Administrar Cursos</a>
-                        <a class="dropdown-item" href="/reportes">Reportes</a>
-                @else
+					<a class="dropdown-item" href="/dashboard">Dashboard</a>
+					<a class="dropdown-item" href="/curso">Administrar Cursos</a>
+					@if (auth()->user()->rol!=1)
+					<a class="dropdown-item" href="/programa">Administrar Programas</a>
+					@endif
+                    <a class="dropdown-item" href="/reportes">Reportes</a>
+                    @if (auth()->user()->rol==4)
                     <a class="dropdown-item" href="/usuario">Administrar Miembros</a>
-                @endif
-                    <a class="dropdown-item" href="/dashboard">Dashboard</a>
+                    @endif
 
 			</li>
 			<!-- Menu Footer-->
